@@ -1,0 +1,63 @@
+{
+  "expo": {
+    "name": "AgriIntell CI",
+    "slug": "inza-agriintell-ci",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/logo.jpeg",
+    "userInterfaceStyle": "light",
+    "assetBundlePatterns": [
+      "assets/**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "ci.agriintell.inza",
+      "infoPlist": {
+        "NSCameraUsageDescription": "AgriIntell CI utilise la camera pour analyser les feuilles.",
+        "NSPhotoLibraryUsageDescription": "AgriIntell CI utilise la galerie pour analyser des photos de cultures.",
+        "NSLocationWhenInUseUsageDescription": "AgriIntell CI utilise votre position pour cartographier les alertes agricoles.",
+        "NSMicrophoneUsageDescription": "AgriIntell CI utilise le microphone pour le conseiller vocal."
+      }
+    },
+    "android": {
+      "package": "ci.agriintell.inza",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/logo.jpeg",
+        "backgroundColor": "#38B000"
+      },
+      "permissions": [
+        "CAMERA",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "RECORD_AUDIO",
+        "READ_EXTERNAL_STORAGE"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/logo.jpeg"
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "AgriIntell CI utilise la camera pour analyser les feuilles.",
+          "microphonePermission": "AgriIntell CI utilise le microphone pour le conseiller vocal.",
+          "recordAudioAndroid": true
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "AgriIntell CI utilise la galerie pour analyser des photos de cultures."
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "AgriIntell CI utilise votre position pour cartographier les alertes agricoles."
+        }
+      ],
+      "expo-sqlite"
+    ]
+  }
+}
