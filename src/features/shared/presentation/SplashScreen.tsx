@@ -14,13 +14,15 @@ export function SplashScreen({ onDone }: SplashScreenProps) {
   }, [onDone]);
 
   return (
-    <LinearGradient colors={[colors.greenLight, colors.greenMedium, colors.greenDark]} style={styles.container}>
+    <LinearGradient colors={[colors.white, colors.orangeLight]} style={styles.container}>
       <View style={styles.logoShell}>
-        <Image source={require("../../../../assets/logo.jpeg")} resizeMode="contain" style={styles.logo} />
+        <Image source={require("../../../../assets/logo.png")} resizeMode="contain" style={styles.logo} />
       </View>
-      <Text style={styles.title}>AgriIntell CI</Text>
+      <Text style={styles.title}>
+        AgriIntell<Text style={styles.titleAccent}> CI</Text>
+      </Text>
       <Text style={styles.subtitle}>L'IA au service de la terre</Text>
-      <ActivityIndicator color="#FFFFFF" size="large" style={styles.loader} />
+      <ActivityIndicator color={colors.green} size="large" style={styles.loader} />
     </LinearGradient>
   );
 }
@@ -33,37 +35,43 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24
   },
   logoShell: {
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    backgroundColor: "#FFFFFF",
+    width: 180,
+    height: 180,
+    borderRadius: 90,
+    backgroundColor: colors.white,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: "#000000",
-    shadowOpacity: 0.28,
-    shadowRadius: 22,
-    shadowOffset: { width: 0, height: 10 },
-    elevation: 9
+    shadowColor: colors.orange,
+    shadowOpacity: 0.15,
+    shadowRadius: 24,
+    shadowOffset: { width: 0, height: 8 },
+    elevation: 8,
+    borderWidth: 1,
+    borderColor: colors.orangeBorder
   },
   logo: {
-    width: 170,
-    height: 170,
-    borderRadius: 85
+    width: 150,
+    height: 150,
+    borderRadius: 75
   },
   title: {
-    marginTop: 38,
-    color: "#FFFFFF",
-    fontSize: 31,
-    fontWeight: "900",
-    letterSpacing: 0
+    marginTop: 32,
+    color: colors.text,
+    fontSize: 32,
+    fontWeight: "800",
+    letterSpacing: -0.5
+  },
+  titleAccent: {
+    color: colors.orange
   },
   subtitle: {
-    marginTop: 8,
-    color: "rgba(255,255,255,0.78)",
-    fontSize: 16,
-    fontStyle: "italic"
+    marginTop: 6,
+    color: colors.greenMedium,
+    fontSize: 15,
+    fontWeight: "600",
+    letterSpacing: 0.2
   },
   loader: {
-    marginTop: 58
+    marginTop: 48
   }
 });

@@ -14,8 +14,8 @@ type Tab = {
 
 const tabs: Tab[] = [
   { key: "agronomy", label: "Agronomie", icon: "psychology", color: colors.green },
-  { key: "logistics", label: "Logistique", icon: "local-shipping", color: colors.amber },
-  { key: "state", label: "Etat", icon: "analytics", color: colors.blue }
+  { key: "logistics", label: "Logistique", icon: "local-shipping", color: colors.orange },
+  { key: "state", label: "État", icon: "analytics", color: colors.greenMedium }
 ];
 
 type BottomTabsProps = {
@@ -36,8 +36,10 @@ export function BottomTabs({ activeTab, onChange }: BottomTabsProps) {
             onPress={() => onChange(tab.key)}
             style={styles.tab}
           >
-            <MaterialIcons name={tab.icon} size={25} color={isActive ? tab.color : "#98A2B3"} />
-            <Text style={[styles.label, { color: isActive ? tab.color : "#667085" }]}>{tab.label}</Text>
+            <View style={[styles.iconWrap, isActive && { backgroundColor: `${tab.color}10` }]}>
+              <MaterialIcons name={tab.icon} size={24} color={isActive ? tab.color : colors.gray} />
+            </View>
+            <Text style={[styles.label, { color: isActive ? tab.color : colors.muted }]}>{tab.label}</Text>
           </Pressable>
         );
       })}
@@ -49,22 +51,35 @@ export type { TabKey };
 
 const styles = StyleSheet.create({
   container: {
-    minHeight: 68,
-    paddingTop: 6,
-    paddingBottom: 8,
+    minHeight: 70,
+    paddingTop: 8,
+    paddingBottom: 10,
     flexDirection: "row",
     borderTopWidth: 1,
-    borderTopColor: colors.border,
-    backgroundColor: colors.surface
+    borderTopColor: colors.borderLight,
+    backgroundColor: colors.surface,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: -4 },
+    elevation: 8
   },
   tab: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    gap: 3
+    gap: 4
+  },
+  iconWrap: {
+    paddingHorizontal: 16,
+    paddingVertical: 4,
+    borderRadius: 16,
+    alignItems: "center",
+    justifyContent: "center"
   },
   label: {
-    fontSize: 12,
-    fontWeight: "700"
+    fontSize: 11,
+    fontWeight: "700",
+    letterSpacing: -0.1
   }
 });

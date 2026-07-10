@@ -31,7 +31,7 @@ export function ROICalculatorScreen({ onBack }: ROICalculatorScreenProps) {
 
   return (
     <View style={styles.container}>
-      <AppHeader title="📊 Calculateur de Gain IA" color={colors.amber} onBack={onBack} />
+      <AppHeader title="📊 Calculateur de Gain IA" color={colors.orange} onBack={onBack} />
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.title}>Parametres de la Parcelle</Text>
         <View style={styles.cropGrid}>
@@ -170,15 +170,15 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   cropChipSelected: {
-    borderColor: colors.amber,
-    backgroundColor: "#FFF5DB"
+    borderColor: colors.orange,
+    backgroundColor: colors.orangeLight
   },
   cropText: {
-    color: colors.gray,
-    fontWeight: "800"
+    color: colors.muted,
+    fontWeight: "700"
   },
   cropTextSelected: {
-    color: colors.amber
+    color: colors.orangeDark
   },
   inputWrap: {
     marginBottom: 14

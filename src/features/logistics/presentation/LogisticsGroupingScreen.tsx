@@ -53,9 +53,9 @@ export function LogisticsGroupingScreen({ onBack }: LogisticsGroupingScreenProps
 
   return (
     <View style={styles.container}>
-      <AppHeader title="🚚 Groupage Logistique Live" color={colors.purple} onBack={onBack} />
+      <AppHeader title="🚚 Groupage Logistique Live" color={colors.green} onBack={onBack} />
       <View style={styles.liveBanner}>
-        <MaterialIcons name="sensors" size={24} color={colors.purple} />
+        <MaterialIcons name="sensors" size={24} color={colors.orange} />
         <Text style={styles.liveText}>Mise a jour en direct des collectes regionales</Text>
         <View style={styles.liveBadge}>
           <Text style={styles.liveBadgeText}>LIVE</Text>
@@ -112,7 +112,7 @@ function ZoneCard({ zone, volume, onAdd }: { zone: string; volume: number; onAdd
           <Text style={styles.zoneTitle}>{zone}</Text>
           <Text style={styles.zoneSubtitle}>Collecte en cours...</Text>
         </View>
-        <Text style={[styles.volume, { color: isReady ? colors.green : colors.purple }]}>
+        <Text style={[styles.volume, { color: isReady ? colors.green : colors.orange }]}>
           {volume.toFixed(1)} T
         </Text>
       </View>
@@ -122,7 +122,7 @@ function ZoneCard({ zone, volume, onAdd }: { zone: string; volume: number; onAdd
             styles.progressFill,
             {
               width: `${progress * 100}%`,
-              backgroundColor: isReady ? colors.green : colors.purple
+              backgroundColor: isReady ? colors.green : colors.orange
             }
           ]}
         />
@@ -146,16 +146,19 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background
   },
   liveBanner: {
-    padding: 15,
-    backgroundColor: "#F3E8FF",
+    minHeight: 48,
+    paddingHorizontal: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.borderLight,
+    backgroundColor: colors.orangeLight,
     flexDirection: "row",
     alignItems: "center",
     gap: 10
   },
   liveText: {
     flex: 1,
-    color: colors.purple,
-    fontWeight: "900"
+    color: colors.orangeDark,
+    fontWeight: "700"
   },
   liveBadge: {
     paddingHorizontal: 8,
@@ -175,11 +178,15 @@ const styles = StyleSheet.create({
   zoneCard: {
     marginBottom: 16,
     padding: 16,
-    borderRadius: 8,
+    borderRadius: 14,
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: colors.borderLight,
     backgroundColor: colors.surface,
-    elevation: 2
+    shadowColor: "#000000",
+    shadowOpacity: 0.04,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 3
   },
   zoneHeader: {
     flexDirection: "row",
@@ -189,58 +196,64 @@ const styles = StyleSheet.create({
   },
   zoneTitle: {
     color: colors.text,
-    fontSize: 18,
-    fontWeight: "900"
+    fontSize: 16,
+    fontWeight: "700",
+    letterSpacing: -0.2
   },
   zoneSubtitle: {
     marginTop: 3,
-    color: colors.gray,
+    color: colors.muted,
     fontSize: 12
   },
   volume: {
-    fontSize: 22,
-    fontWeight: "900"
+    fontSize: 20,
+    fontWeight: "700",
+    letterSpacing: -0.2
   },
   progressTrack: {
-    height: 12,
+    height: 8,
     marginTop: 15,
     overflow: "hidden",
-    borderRadius: 6,
-    backgroundColor: "#EEF2F6"
+    borderRadius: 4,
+    backgroundColor: colors.borderLight
   },
   progressFill: {
     height: "100%",
-    borderRadius: 6
+    borderRadius: 4
   },
   zoneFooter: {
     marginTop: 12,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
-    gap: 10
+    justifyContent: "space-between"
   },
   missing: {
-    flex: 1,
-    fontWeight: "900"
+    fontSize: 12,
+    fontWeight: "700"
   },
   addButton: {
-    minHeight: 42,
+    minHeight: 38,
     paddingHorizontal: 14,
-    borderRadius: 21,
+    borderRadius: 12,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     gap: 6,
-    backgroundColor: colors.purple
+    backgroundColor: colors.orange,
+    shadowColor: colors.orange,
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 3 },
+    elevation: 3
   },
   addText: {
     color: "#FFFFFF",
-    fontSize: 12,
-    fontWeight: "900"
+    fontSize: 11,
+    fontWeight: "700"
   },
   threshold: {
     marginTop: 4,
-    color: colors.gray,
+    color: colors.subtle,
     fontStyle: "italic",
     textAlign: "center"
   },
@@ -254,26 +267,33 @@ const styles = StyleSheet.create({
   dialog: {
     width: "100%",
     padding: 20,
-    borderRadius: 8,
-    backgroundColor: colors.surface
+    borderRadius: 16,
+    backgroundColor: colors.surface,
+    shadowColor: "#000000",
+    shadowOpacity: 0.08,
+    shadowRadius: 20,
+    shadowOffset: { width: 0, height: 8 },
+    elevation: 6
   },
   dialogTitle: {
     color: colors.text,
-    fontSize: 19,
-    fontWeight: "900"
+    fontSize: 18,
+    fontWeight: "700",
+    letterSpacing: -0.2
   },
   dialogCopy: {
-    marginTop: 9,
-    color: colors.gray,
-    lineHeight: 20
+    marginTop: 8,
+    color: colors.muted,
+    lineHeight: 18,
+    fontSize: 13
   },
   dialogInputWrap: {
     marginTop: 15,
-    minHeight: 54,
-    paddingHorizontal: 12,
-    borderRadius: 8,
+    minHeight: 50,
+    paddingHorizontal: 14,
+    borderRadius: 14,
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: colors.borderLight,
     flexDirection: "row",
     alignItems: "center"
   },
@@ -283,8 +303,8 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   suffix: {
-    color: colors.gray,
-    fontWeight: "900"
+    color: colors.muted,
+    fontWeight: "700"
   },
   dialogActions: {
     marginTop: 18,
@@ -299,19 +319,24 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   cancelText: {
-    color: colors.gray,
-    fontWeight: "800"
+    color: colors.muted,
+    fontWeight: "700"
   },
   validateButton: {
-    minHeight: 44,
-    paddingHorizontal: 14,
-    borderRadius: 8,
+    minHeight: 42,
+    paddingHorizontal: 16,
+    borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: colors.purple
+    backgroundColor: colors.orange,
+    shadowColor: colors.orange,
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 3
   },
   validateText: {
     color: "#FFFFFF",
-    fontWeight: "900"
+    fontWeight: "700"
   }
 });

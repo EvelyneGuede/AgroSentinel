@@ -14,57 +14,71 @@ type ServiceCardProps = {
 export function ServiceCard({ title, subtitle, icon, color, onPress }: ServiceCardProps) {
   return (
     <Pressable onPress={onPress} style={({ pressed }) => [styles.card, pressed && styles.pressed]}>
-      <View style={[styles.iconWrap, { backgroundColor: `${color}22` }]}>
-        <MaterialIcons name={icon} size={24} color={color} />
+      <View style={[styles.iconWrap, { backgroundColor: `${color}15` }]}>
+        <MaterialIcons name={icon} size={22} color={color} />
       </View>
       <View style={styles.copy}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.subtitle}>{subtitle}</Text>
+        <Text numberOfLines={1} style={styles.title}>{title}</Text>
+        <Text numberOfLines={2} style={styles.subtitle}>{subtitle}</Text>
       </View>
-      <MaterialIcons name="chevron-right" size={24} color="#98A2B3" />
+      <View style={styles.chevronWrap}>
+        <MaterialIcons name="chevron-right" size={20} color={colors.subtle} />
+      </View>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-    minHeight: 88,
-    marginBottom: 14,
-    padding: 16,
-    borderRadius: 8,
+    minHeight: 80,
+    marginBottom: 12,
+    padding: 14,
+    borderRadius: 14,
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: colors.borderLight,
     backgroundColor: colors.surface,
     flexDirection: "row",
     alignItems: "center",
-    shadowColor: "#000000",
-    shadowOpacity: 0.08,
-    shadowRadius: 10,
+    shadowColor: "#0A0A0A",
+    shadowOpacity: 0.04,
+    shadowRadius: 12,
     shadowOffset: { width: 0, height: 4 },
-    elevation: 2
+    elevation: 3
   },
   pressed: {
-    opacity: 0.86
+    opacity: 0.8,
+    borderColor: colors.border,
+    transform: [{ scale: 0.98 }]
   },
   iconWrap: {
-    width: 46,
-    height: 46,
-    borderRadius: 23,
+    width: 44,
+    height: 44,
+    borderRadius: 12,
     alignItems: "center",
     justifyContent: "center"
   },
   copy: {
     flex: 1,
-    paddingHorizontal: 14
+    paddingHorizontal: 12
   },
   title: {
     color: colors.text,
     fontSize: 15,
-    fontWeight: "800"
+    fontWeight: "700",
+    letterSpacing: -0.2
   },
   subtitle: {
-    color: colors.gray,
-    fontSize: 13,
-    marginTop: 3
+    color: colors.muted,
+    fontSize: 12,
+    marginTop: 2,
+    lineHeight: 16
+  },
+  chevronWrap: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: colors.background,
+    alignItems: "center",
+    justifyContent: "center"
   }
 });

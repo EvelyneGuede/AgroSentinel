@@ -75,7 +75,7 @@ export function WeatherPredictionScreen({ onBack }: WeatherPredictionScreenProps
         onBack={onBack}
         rightActions={
           <Pressable accessibilityLabel="Position GPS" onPress={() => loadWeather(selectedCity, true)} style={styles.gpsButton}>
-            <MaterialIcons name="my-location" size={24} color="#FFFFFF" />
+            <MaterialIcons name="my-location" size={24} color={colors.text} />
           </Pressable>
         }
       />

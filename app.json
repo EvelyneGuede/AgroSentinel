@@ -4,7 +4,7 @@
     "slug": "inza-agriintell-ci",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logo.jpeg",
+    "icon": "./assets/logo.png",
     "userInterfaceStyle": "light",
     "assetBundlePatterns": [
       "assets/**/*"
@@ -22,7 +22,7 @@
     "android": {
       "package": "ci.agriintell.inza",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/logo.jpeg",
+        "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#38B000"
       },
       "permissions": [
@@ -34,7 +34,7 @@
       ]
     },
     "web": {
-      "favicon": "./assets/logo.jpeg"
+      "favicon": "./assets/logo.png"
     },
     "plugins": [
       [
@@ -57,7 +57,8 @@
           "locationWhenInUsePermission": "AgriIntell CI utilise votre position pour cartographier les alertes agricoles."
         }
       ],
-      "expo-sqlite"
+      "expo-sqlite",
+      "expo-font"
     ]
   }
 }

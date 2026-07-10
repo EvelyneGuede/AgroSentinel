@@ -12,15 +12,15 @@ type HomeScreenProps = {
 };
 
 const titles: Record<TabKey, string> = {
-  agronomy: "🌾 AGRONOMIE CONNECTEE",
-  logistics: "📦 LOGISTIQUE & MARCHE",
-  state: "📊 ETAT : SOUVERAINETE"
+  agronomy: "🌾 AGRONOMIE CONNECTÉE",
+  logistics: "📦 LOGISTIQUE & MARCHÉ",
+  state: "📊 ÉTAT : SOUVERAINETÉ"
 };
 
 const tabColors: Record<TabKey, string> = {
   agronomy: colors.green,
-  logistics: colors.amber,
-  state: colors.blue
+  logistics: colors.orange,
+  state: colors.greenMedium
 };
 
 export function HomeScreen({ navigate, dashboard }: HomeScreenProps) {
@@ -43,10 +43,11 @@ export function HomeScreen({ navigate, dashboard }: HomeScreenProps) {
 
 function AgronomyTab({ navigate }: { navigate: Navigate }) {
   return (
-    <ScrollView contentContainerStyle={styles.scrollContent}>
+    <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
       <Text style={styles.sectionTitle}>🏥 Santé & Diagnostic IA</Text>
-      <Text style={styles.sectionSubtitle}>✅ Solutions 100% Offline au champ</Text>
+      <Text style={styles.sectionSubtitle}>Solutions 100% Offline au champ</Text>
       <View style={styles.spacer} />
+      
       <ServiceCard
         title="📱 Diagnostic Phytosanitaire"
         subtitle="Analyse IA (TFLite) en moins de 2s"
@@ -58,21 +59,23 @@ function AgronomyTab({ navigate }: { navigate: Navigate }) {
         title="🎤 Conseiller Vocal IA"
         subtitle="Vulgarisation & posologie vocale"
         icon="record-voice-over"
-        color={colors.blue}
+        color={colors.orange}
         onPress={() => navigate("vocal")}
       />
+      
       <View style={styles.blockTitleWrap}>
-        <Text style={styles.blockTitle}>☁️ Alertes & Predictions Cloud</Text>
+        <Text style={styles.blockTitle}>☁️ Alertes & Prédictions Cloud</Text>
       </View>
+      
       <ServiceCard
-        title="🗺️ Sentinelle Epidemique"
-        subtitle="Cartographie des risques (regle 10km)"
+        title="🗺️ Sentinelle Épidémique"
+        subtitle="Cartographie des risques (règle 10km)"
         icon="map"
         color={colors.red}
         onPress={() => navigate("sentinel")}
       />
       <ServiceCard
-        title="⛅ Meteo Agro-Predictive"
+        title="⛅ Météo Agro-Prédictive"
         subtitle="API satellites & indices fongiques"
         icon="wb-sunny"
         color={colors.orange}
@@ -84,29 +87,30 @@ function AgronomyTab({ navigate }: { navigate: Navigate }) {
 
 function LogisticsTab({ navigate }: { navigate: Navigate }) {
   return (
-    <ScrollView contentContainerStyle={styles.scrollContent}>
+    <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
       <Text style={styles.sectionTitle}>💰 Valorisation Économique</Text>
-      <Text style={styles.sectionSubtitle}>⚙️ Moteur financier & logistique</Text>
+      <Text style={styles.sectionSubtitle}>Moteur financier & logistique</Text>
       <View style={styles.spacer} />
+      
       <ServiceCard
         title="📊 Calculateur de ROI"
         subtitle="Conversion pertes volume en FCFA"
         icon="calculate"
-        color={colors.amber}
+        color={colors.orange}
         onPress={() => navigate("roi")}
       />
       <ServiceCard
         title="🚚 Groupage Logistique"
-        subtitle="Planification premier kilometre"
+        subtitle="Planification premier kilomètre"
         icon="local-shipping"
-        color={colors.purple}
+        color={colors.green}
         onPress={() => navigate("logistics")}
       />
       <ServiceCard
-        title="🛍️ Marche B2B Flash"
-        subtitle="Stocks certifies & escrow Mobile Money"
+        title="🛍️ Marché B2B Flash"
+        subtitle="Stocks certifiés & escrow Mobile Money"
         icon="shopping-bag"
-        color={colors.teal}
+        color={colors.greenMedium}
         onPress={() => navigate("marketplace")}
       />
     </ScrollView>
@@ -127,24 +131,27 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     color: colors.text,
-    fontSize: 20,
-    fontWeight: "900"
+    fontSize: 18,
+    fontWeight: "700",
+    letterSpacing: -0.3
   },
   sectionSubtitle: {
-    color: colors.gray,
-    marginTop: 3,
-    fontSize: 14
+    color: colors.muted,
+    marginTop: 2,
+    fontSize: 13,
+    fontWeight: "500"
   },
   spacer: {
-    height: 18
+    height: 14
   },
   blockTitleWrap: {
-    marginTop: 8,
+    marginTop: 18,
     marginBottom: 10
   },
   blockTitle: {
     color: colors.text,
-    fontSize: 18,
-    fontWeight: "900"
+    fontSize: 16,
+    fontWeight: "700",
+    letterSpacing: -0.2
   }
 });

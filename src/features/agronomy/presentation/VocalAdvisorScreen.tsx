@@ -61,7 +61,7 @@ export function VocalAdvisorScreen({ onBack }: VocalAdvisorScreenProps) {
 
   return (
     <View style={styles.container}>
-      <AppHeader title="🎤 Conseiller Vocal IA (Cloud)" color={colors.blue} onBack={onBack} />
+      <AppHeader title="🎤 Conseiller Vocal IA" color={colors.orange} onBack={onBack} />
       {isSearching ? <View style={styles.progressBar} /> : null}
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
@@ -175,88 +175,109 @@ const styles = StyleSheet.create({
     flex: 1
   },
   progressBar: {
-    height: 4,
+    height: 3,
     backgroundColor: colors.orange
   },
   messages: {
     flexGrow: 1,
-    padding: 20
+    padding: 16
   },
   suggestionsContainer: {
     alignItems: "center",
-    marginVertical: 30
+    marginVertical: 20
   },
   suggestionsTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 16,
+    fontWeight: "700",
     color: colors.text,
-    marginBottom: 15
+    marginBottom: 12,
+    letterSpacing: -0.2
   },
   suggestionChip: {
-    backgroundColor: "#E3F2FD",
+    backgroundColor: colors.orangeLight,
+    borderWidth: 1,
+    borderColor: colors.orangeBorder,
     paddingHorizontal: 16,
     paddingVertical: 12,
-    borderRadius: 20,
-    marginVertical: 8,
+    borderRadius: 14,
+    marginVertical: 6,
     width: "100%",
     alignItems: "center"
   },
   suggestionText: {
-    color: colors.blue,
-    fontSize: 15,
-    fontWeight: "600"
+    color: colors.orangeDark,
+    fontSize: 14,
+    fontWeight: "700"
   },
   bubble: {
-    maxWidth: "86%",
-    marginVertical: 8,
-    padding: 15,
-    borderRadius: 8
+    maxWidth: "85%",
+    marginVertical: 6,
+    padding: 14,
+    borderRadius: 14,
+    shadowColor: "#000000",
+    shadowOpacity: 0.02,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 1
   },
   userBubble: {
     alignSelf: "flex-end",
-    backgroundColor: "#D6E8FF"
+    backgroundColor: colors.orangeLight,
+    borderBottomRightRadius: 4,
+    borderWidth: 1,
+    borderColor: colors.orangeBorder
   },
   aiBubble: {
     alignSelf: "flex-start",
-    backgroundColor: "#DFF4E5"
+    backgroundColor: colors.greenLight,
+    borderBottomLeftRadius: 4,
+    borderWidth: 1,
+    borderColor: colors.greenBorder
   },
   sender: {
     color: colors.text,
     fontSize: 10,
-    fontWeight: "900",
-    marginBottom: 5
+    fontWeight: "700",
+    marginBottom: 4,
+    textTransform: "uppercase",
+    opacity: 0.8
   },
   bubbleText: {
     color: colors.text,
-    fontSize: 16,
-    lineHeight: 23
+    fontSize: 14,
+    lineHeight: 20
   },
   inputArea: {
-    padding: 15,
+    padding: 12,
     borderTopWidth: 1,
-    borderTopColor: colors.border,
+    borderTopColor: colors.borderLight,
     backgroundColor: colors.surface,
     flexDirection: "row",
     alignItems: "center",
-    gap: 10
+    gap: 8
   },
   input: {
     flex: 1,
-    minHeight: 50,
-    paddingHorizontal: 18,
-    borderRadius: 25,
+    minHeight: 46,
+    paddingHorizontal: 16,
+    borderRadius: 14,
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: colors.borderLight,
     color: colors.text,
-    backgroundColor: "#FFFFFF"
+    backgroundColor: colors.white
   },
   micButton: {
-    width: 54,
-    height: 54,
-    borderRadius: 27,
+    width: 48,
+    height: 48,
+    borderRadius: 14,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: colors.blue
+    backgroundColor: colors.orange,
+    shadowColor: colors.orange,
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 3
   },
   micActive: {
     backgroundColor: colors.red

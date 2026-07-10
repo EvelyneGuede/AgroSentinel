@@ -115,16 +115,16 @@ export function DiagnosticScreen({ onBack }: DiagnosticScreenProps) {
   return (
     <View style={styles.container}>
       <AppHeader
-        title="🏥 Diagnostic Phytosanitaire IA"
+        title="🏥 Diagnostic IA"
         color={colors.green}
         onBack={onBack}
         rightActions={
           <>
             <Pressable accessibilityLabel="Galerie" onPress={pickImage} style={styles.headerIcon}>
-              <MaterialIcons name="photo-library" size={23} color="#FFFFFF" />
+              <MaterialIcons name="photo-library" size={23} color={colors.text} />
             </Pressable>
             <Pressable accessibilityLabel="Historique" onPress={openHistory} style={styles.headerIcon}>
-              <MaterialIcons name="history" size={24} color="#FFFFFF" />
+              <MaterialIcons name="history" size={24} color={colors.text} />
             </Pressable>
           </>
         }
@@ -195,7 +195,8 @@ export function DiagnosticScreen({ onBack }: DiagnosticScreenProps) {
 function ResultCard({ result }: { result: ClassificationResult }) {
   const riskColor = result.risk_level === "Eleve" ? colors.red : result.risk_level === "Moyen" ? colors.orange : colors.green;
   const riskEmoji = result.risk_level === "Eleve" ? "🔴" : result.risk_level === "Moyen" ? "🟡" : "🟢";
-  const confidencePercent = (result.confidence * 100).toFixed(1);
+  const confidenceVal = result.confidence * 100;
+  const confidencePercent = confidenceVal.toFixed(1);
   
   return (
     <View style={styles.resultCard}>
@@ -209,7 +210,7 @@ function ResultCard({ result }: { result: ClassificationResult }) {
         <View style={styles.riskContent}>
           <Text style={[styles.riskValue, { color: riskColor }]}>{riskEmoji} {result.risk_level.toUpperCase()}</Text>
           <View style={styles.confidenceBar}>
-            <View style={[styles.confidenceBarFill, { width: `${Math.min(confidencePercent, 100)}%`, backgroundColor: riskColor }]} />
+            <View style={[styles.confidenceBarFill, { width: `${Math.min(confidenceVal, 100)}%`, backgroundColor: riskColor }]} />
           </View>
           <Text style={styles.confidenceText}>Confiance: {confidencePercent}%</Text>
         </View>
@@ -331,24 +332,29 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface
   },
   chipSelected: {
-    borderColor: colors.green,
-    backgroundColor: "#E8F5E9"
+    borderColor: colors.orange,
+    backgroundColor: colors.orangeLight
   },
   chipText: {
-    color: colors.gray,
-    fontWeight: "800",
+    color: colors.muted,
+    fontWeight: "700",
     fontSize: 12
   },
   chipTextSelected: {
-    color: colors.green
+    color: colors.orangeDark
   },
   cameraBox: {
     minHeight: 360,
-    borderWidth: 2,
-    borderColor: colors.green,
-    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: colors.greenBorder,
+    borderRadius: 16,
     overflow: "hidden",
-    backgroundColor: "#111827"
+    backgroundColor: "#111827",
+    shadowColor: colors.green,
+    shadowOpacity: 0.05,
+    shadowRadius: 16,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 3
   },
   camera: {
     flex: 1,
@@ -359,26 +365,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 22,
-    backgroundColor: "#EEF2F6"
+    backgroundColor: colors.borderLight
   },
   placeholderText: {
     marginTop: 8,
     textAlign: "center",
-    color: colors.gray,
-    fontWeight: "700"
+    color: colors.muted,
+    fontWeight: "600"
   },
   permissionButton: {
     marginTop: 16,
     paddingHorizontal: 16,
     minHeight: 44,
-    borderRadius: 8,
+    borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: colors.green
   },
   permissionButtonText: {
     color: "#FFFFFF",
-    fontWeight: "900"
+    fontWeight: "700"
   },
   analysisOverlay: {
     position: "absolute",
@@ -393,20 +399,20 @@ const styles = StyleSheet.create({
   analysisText: {
     marginTop: 14,
     color: "#FFFFFF",
-    fontWeight: "900"
+    fontWeight: "700"
   },
   resultCard: {
     marginTop: 14,
     padding: 16,
-    borderRadius: 8,
+    borderRadius: 14,
     borderWidth: 1,
-    borderColor: colors.green,
+    borderColor: colors.borderLight,
     backgroundColor: colors.surface,
     shadowColor: "#000000",
-    shadowOpacity: 0.08,
-    shadowRadius: 10,
+    shadowOpacity: 0.04,
+    shadowRadius: 12,
     shadowOffset: { width: 0, height: 4 },
-    elevation: 2
+    elevation: 3
   },
   resultTitleRow: {
     flexDirection: "row",
@@ -417,11 +423,12 @@ const styles = StyleSheet.create({
     flex: 1,
     color: colors.text,
     fontSize: 18,
-    fontWeight: "900"
+    fontWeight: "700",
+    letterSpacing: -0.3
   },
   divider: {
     height: 1,
-    backgroundColor: colors.border,
+    backgroundColor: colors.borderLight,
     marginVertical: 12
   },
   confidenceRow: {
@@ -430,18 +437,18 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   resultLabel: {
-    color: colors.gray,
+    color: colors.muted,
     fontWeight: "700"
   },
   confidence: {
     color: colors.green,
-    fontWeight: "900"
+    fontWeight: "700"
   },
   recommendationLabel: {
     marginTop: 12,
-    color: colors.brown,
+    color: colors.orangeDark,
     fontSize: 12,
-    fontWeight: "900"
+    fontWeight: "700"
   },
   recommendation: {
     marginTop: 5,
@@ -455,25 +462,36 @@ const styles = StyleSheet.create({
   },
   captureButton: {
     flex: 1,
-    minHeight: 58,
-    borderRadius: 8,
+    minHeight: 54,
+    borderRadius: 14,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
     gap: 8,
-    backgroundColor: colors.green
+    backgroundColor: colors.green,
+    shadowColor: colors.green,
+    shadowOpacity: 0.15,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 4
   },
   captureText: {
     color: "#FFFFFF",
-    fontWeight: "900"
+    fontWeight: "700",
+    letterSpacing: -0.1
   },
   galleryButton: {
-    width: 58,
-    minHeight: 58,
-    borderRadius: 8,
+    width: 54,
+    minHeight: 54,
+    borderRadius: 14,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: colors.orange
+    backgroundColor: colors.orange,
+    shadowColor: colors.orange,
+    shadowOpacity: 0.15,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 4
   },
   modalBackdrop: {
     flex: 1,

@@ -74,7 +74,7 @@ export function MarketplaceScreen({ onBack }: MarketplaceScreenProps) {
 
   return (
     <View style={styles.container}>
-      <AppHeader title="🛍️ Marche B2B Flash" color={colors.teal} onBack={onBack} />
+      <AppHeader title="🛍️ Marché B2B Flash" color={colors.greenMedium} onBack={onBack} />
       <ScrollView contentContainerStyle={styles.content}>
         {items.map((item, index) => (
           <MarketCard key={`${item.product}-${index}`} item={item} onBuy={() => setPurchaseIndex(index)} />
@@ -83,7 +83,7 @@ export function MarketplaceScreen({ onBack }: MarketplaceScreenProps) {
       <Modal transparent animationType="slide" visible={Boolean(selectedItem)} onRequestClose={() => setPurchaseIndex(null)}>
         <View style={styles.sheetBackdrop}>
           <View style={styles.sheet}>
-            <MaterialIcons name="security" size={50} color={colors.teal} />
+            <MaterialIcons name="security" size={50} color={colors.greenMedium} />
             <Text style={styles.sheetTitle}>Paiement Sequestre Mobile Money</Text>
             <Text style={styles.sheetText}>Bloquer les fonds pour : {selectedItem?.product} ?</Text>
             <Pressable onPress={confirmPurchase} style={styles.confirmButton}>
@@ -104,7 +104,7 @@ function MarketCard({ item, onBuy }: { item: MarketItem; onBuy: () => void }) {
     <View style={[styles.card, item.isSold && styles.soldCard]}>
       <View style={styles.cardTop}>
         <View style={styles.avatar}>
-          <MaterialIcons name={item.icon} size={24} color={colors.teal} />
+          <MaterialIcons name={item.icon} size={24} color={colors.greenMedium} />
         </View>
         <View style={styles.itemCopy}>
           <Text style={styles.product}>{item.product}</Text>
@@ -141,15 +141,15 @@ const styles = StyleSheet.create({
   card: {
     marginBottom: 16,
     padding: 16,
-    borderRadius: 8,
+    borderRadius: 14,
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: colors.borderLight,
     backgroundColor: colors.surface,
     shadowColor: "#000000",
-    shadowOpacity: 0.08,
-    shadowRadius: 10,
+    shadowOpacity: 0.04,
+    shadowRadius: 12,
     shadowOffset: { width: 0, height: 4 },
-    elevation: 2
+    elevation: 3
   },
   soldCard: {
     opacity: 0.62,
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     borderRadius: 23,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#DDF7F1"
+    backgroundColor: `${colors.greenMedium}15`
   },
   itemCopy: {
     flex: 1,
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
   },
   product: {
     color: colors.text,
-    fontWeight: "900"
+    fontWeight: "700"
   },
   meta: {
     marginTop: 3,
@@ -183,8 +183,8 @@ const styles = StyleSheet.create({
     alignItems: "flex-end"
   },
   price: {
-    color: colors.teal,
-    fontWeight: "900"
+    color: colors.greenMedium,
+    fontWeight: "700"
   },
   perKg: {
     color: colors.gray,
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 5,
     borderRadius: 5,
-    backgroundColor: "#FFF1D6"
+    backgroundColor: colors.orangeLight
   },
   tagText: {
     color: "#92400E",
@@ -210,17 +210,17 @@ const styles = StyleSheet.create({
   buyButton: {
     minHeight: 42,
     paddingHorizontal: 16,
-    borderRadius: 8,
+    borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: colors.teal
+    backgroundColor: colors.greenMedium
   },
   buyDisabled: {
     backgroundColor: "#98A2B3"
   },
   buyText: {
     color: "#FFFFFF",
-    fontWeight: "900"
+    fontWeight: "700"
   },
   sheetBackdrop: {
     flex: 1,
@@ -229,8 +229,8 @@ const styles = StyleSheet.create({
   },
   sheet: {
     padding: 24,
-    borderTopLeftRadius: 18,
-    borderTopRightRadius: 18,
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
     alignItems: "center",
     backgroundColor: colors.surface
   },
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
     color: colors.text,
     fontSize: 18,
-    fontWeight: "900",
+    fontWeight: "700",
     textAlign: "center"
   },
   sheetText: {
@@ -250,14 +250,14 @@ const styles = StyleSheet.create({
     width: "100%",
     minHeight: 50,
     marginTop: 20,
-    borderRadius: 8,
+    borderRadius: 14,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: colors.teal
+    backgroundColor: colors.greenMedium
   },
   confirmText: {
     color: "#FFFFFF",
-    fontWeight: "900"
+    fontWeight: "700"
   },
   cancelSheetButton: {
     minHeight: 44,
