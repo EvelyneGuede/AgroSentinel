@@ -18,7 +18,7 @@ export function AppHeader({ title, color, onBack, rightActions }: AppHeaderProps
         <View style={styles.side}>
           {onBack ? (
             <Pressable accessibilityLabel="Retour" onPress={onBack} style={styles.iconButton}>
-              <MaterialIcons name="arrow-back" size={24} color={colors.text} />
+              <MaterialIcons name="arrow-back" size={22} color={colors.text} />
             </Pressable>
           ) : null}
         </View>
@@ -36,30 +36,31 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderBottomWidth: 1,
     borderBottomColor: colors.borderLight,
-    shadowColor: "#000000",
-    shadowOpacity: 0.03,
-    shadowRadius: 8,
+    shadowColor: "#0D1B2A",
+    shadowOpacity: 0.04,
+    shadowRadius: 10,
     shadowOffset: { width: 0, height: 2 },
-    elevation: 2,
+    elevation: 2
   },
   accentLine: {
     height: 3,
-    width: "100%",
+    width: "100%"
   },
   headerBody: {
-    minHeight: 56,
-    paddingHorizontal: 8,
+    minHeight: 60,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "space-between"
   },
   side: {
-    width: 60,
+    width: 56,
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "center"
   },
   right: {
-    justifyContent: "flex-end",
+    justifyContent: "flex-end"
   },
   iconButton: {
     width: 40,
@@ -67,14 +68,16 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: colors.borderLight,
+    backgroundColor: colors.surfaceAlt,
+    borderWidth: 1,
+    borderColor: colors.borderLight
   },
   title: {
     flex: 1,
     color: colors.text,
     fontSize: 16,
-    fontWeight: "700",
+    fontWeight: "800",
     textAlign: "center",
-    letterSpacing: -0.3,
-  },
+    letterSpacing: -0.3
+  }
 });

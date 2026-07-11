@@ -36,8 +36,8 @@ export function BottomTabs({ activeTab, onChange }: BottomTabsProps) {
             onPress={() => onChange(tab.key)}
             style={styles.tab}
           >
-            <View style={[styles.iconWrap, isActive && { backgroundColor: `${tab.color}10` }]}>
-              <MaterialIcons name={tab.icon} size={24} color={isActive ? tab.color : colors.gray} />
+            <View style={[styles.iconWrap, isActive && { backgroundColor: `${tab.color}16` }]}> 
+              <MaterialIcons name={tab.icon} size={22} color={isActive ? tab.color : colors.gray} />
             </View>
             <Text style={[styles.label, { color: isActive ? tab.color : colors.muted }]}>{tab.label}</Text>
           </Pressable>
@@ -51,31 +51,31 @@ export type { TabKey };
 
 const styles = StyleSheet.create({
   container: {
-    minHeight: 70,
+    minHeight: 78,
     paddingTop: 8,
     paddingBottom: 10,
     flexDirection: "row",
     borderTopWidth: 1,
     borderTopColor: colors.borderLight,
     backgroundColor: colors.surface,
-    shadowColor: "#000",
-    shadowOpacity: 0.05,
-    shadowRadius: 10,
+    shadowColor: "#09111C",
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
     shadowOffset: { width: 0, height: -4 },
     elevation: 8
   },
   tab: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
-    gap: 4
+    justifyContent: "center"
   },
   iconWrap: {
-    paddingHorizontal: 16,
-    paddingVertical: 4,
+    paddingHorizontal: 15,
+    paddingVertical: 5,
     borderRadius: 16,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    marginBottom: 4
   },
   label: {
     fontSize: 11,

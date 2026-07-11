@@ -57,7 +57,7 @@ export function SentinelMapScreen({ onBack }: SentinelMapScreenProps) {
       <AppHeader title="🗺️ Sentinelle Epidemique Live" color={colors.red} onBack={onBack} />
       <View style={styles.mapWrap}>
         <MapView style={styles.map} region={region} onRegionChangeComplete={setRegion}>
-          <UrlTile maximumZ={19} urlTemplate="https://tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          <UrlTile maximumZ={19} urlTemplate="https://api.mapbox.com/styles/v1/mapbox/light-v11/tiles/256/{z}/{x}/{y}?access_token=REDACTED_MAPBOX_TOKEN" />
           {diagnostics.map((diag, index) => (
             <Marker
               key={`${diag.id ?? index}-${diag.date}`}

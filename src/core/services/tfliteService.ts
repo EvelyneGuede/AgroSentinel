@@ -88,6 +88,28 @@ function hashToIndex(value: string, modulo: number) {
 }
 
 function cleanLabel(label: string) {
+  const l = label.toLowerCase().replace("tomato___", "").replaceAll("_", " ").trim();
+  
+  if (l.includes("blackpod")) return "Pourriture Brune (Blackpod)";
+  if (l.includes("frosty rot")) return "Moniliose (Frosty Rot)";
+  if (l.includes("mirid")) return "Ravages de Capsides (Mirides)";
+  if (l.includes("bacterial spot")) return "Tache Bactérienne (Bacterial Spot)";
+  if (l.includes("early blight")) return "Alternariose (Early Blight)";
+  if (l.includes("late blight")) return "Mildiou (Late Blight)";
+  if (l.includes("leaf mold")) return "Moisissure Olive (Leaf Mold)";
+  if (l.includes("septoria leaf spot")) return "Septoriose (Septoria)";
+  if (l.includes("spider mites")) return "Acariens (Araignées Rouges)";
+  if (l.includes("target spot")) return "Tache Cible (Target Spot)";
+  if (l.includes("yellow leaf curl")) return "Virus Enroulement Jaune (TYLCV)";
+  if (l.includes("mosaic virus")) return "Virus de la Mosaïque";
+  if (l.includes("bacterial canker")) return "Chancre Bactérien";
+  if (l.includes("cutting weevil")) return "Charançon de la Feuille";
+  if (l.includes("die back")) return "Dépérissement Terminal (Die Back)";
+  if (l.includes("gall midge")) return "Cécidomyie des Fleurs (Gall Midge)";
+  if (l.includes("powdery mildew")) return "Oïdium";
+  if (l.includes("sooty mould")) return "Fumagine (Sooty Mould)";
+  if (l.includes("healthy") || l.includes("sain")) return "Sain (Pas de maladie)";
+  
   return label.replace("Tomato___", "").replaceAll("_", " ");
 }
 
@@ -95,35 +117,55 @@ function getRecommendation(label: string) {
   const l = label.toLowerCase();
 
   if (l.includes("blackpod")) {
-    return "Pourriture Brune : recoltez les cabosses atteintes tous les 2 jours et enterrez-les. Appliquez un fongicide cuivrique.";
+    return "💡 Action immédiate : Récoltez toutes les cabosses infectées (noires) sous 48h pour stopper la contagion.\n\n" +
+           "🛡️ Traitement : Pulvérisez un fongicide cuprique homologué (ex: oxychlorure de cuivre) sur les cabosses saines restantes.\n\n" +
+           "🚜 Prévention : Éliminez les mauvaises herbes au pied des arbres et pratiquez une taille d'aération pour réduire l'humidité ambiante.";
   }
   if (l.includes("frosty")) {
-    return "Moniliose : detruisez les fruits momifies avec precaution pour ne pas disperser les spores.";
+    return "💡 Action immédiate : Retirez les cabosses momifiées avec précaution sans les secouer pour ne pas disperser les spores.\n\n" +
+           "🛡️ Traitement : Enterrez les fruits infectés sous 10 cm de terre ou recouvrez-les pour accélérer la décomposition.\n\n" +
+           "🚜 Prévention : Taillez régulièrement les cacaoyers pour favoriser l'entrée du soleil et de l'air.";
   }
   if (l.includes("mirid")) {
-    return "Capsides : traitez avec un insecticide agree pendant les periodes de pullulation (aout-septembre).";
+    return "💡 Action immédiate : Repérez les lésions sur les jeunes branches et cabosses causées par les piqûres de mirides.\n\n" +
+           "🛡️ Traitement : Appliquez un insecticide agréé ciblé tôt le matin ou le soir, pendant les pics de présence (juillet à septembre).\n\n" +
+           "🚜 Prévention : Maintenez un ombrage modéré (50%) car les capsides préfèrent les fortes trouées de lumière.";
   }
   if (l.includes("anthracnose")) {
-    return "Anthracnose : taillez les rameaux secs et ramassez les fruits tombes. Pulverisez un fongicide apres la floraison.";
+    return "💡 Action immédiate : Ramassez tous les fruits et feuilles tombés au sol et brûlez-les hors de la plantation.\n\n" +
+           "🛡️ Traitement : Pulvérisez un fongicide à base de cuivre ou de mancozèbe juste après la floraison.\n\n" +
+           "🚜 Prévention : Taillez les branches mortes ou affaiblies après la récolte pour nettoyer la canopée.";
   }
   if (l.includes("bacterial canker")) {
-    return "Chancre Bacterien : coupez et brulez les branches infectees. Desinfectez les outils a l'alcool.";
+    return "💡 Action immédiate : Coupez les branches infectées à 10 cm sous la partie chancrée et désinfectez les outils à l'alcool à 70° après chaque coupe.\n\n" +
+           "🛡️ Traitement : Appliquez une bouillie bordelaise après la taille pour protéger les coupes.\n\n" +
+           "🚜 Prévention : Appliquez un mastic de cicatrisation sur les plaies importantes et évitez les blessures d'écorce.";
   }
   if (l.includes("powdery mildew")) {
-    return "Oidium : appliquez du soufre mouillable des l'apparition des premieres fleurs.";
+    return "💡 Action immédiate : Supprimez les inflorescences et jeunes pousses présentant un feutrage blanc poudreux.\n\n" +
+           "🛡️ Traitement : Effectuez un poudrage de soufre mouillable dès l'apparition des premières panicules florales.\n\n" +
+           "🚜 Prévention : Évitez les apports excessifs d'engrais azotés qui sensibilisent les jeunes tissus de la mangue.";
   }
   if (l.includes("early_blight")) {
-    return "Alternariose : pratiquez la rotation des cultures. Utilisez des semences saines et evitez de mouiller le feuillage.";
+    return "💡 Action immédiate : Supprimez les feuilles du bas atteintes de taches brunes circulaires avec anneaux concentriques.\n\n" +
+           "🛡️ Traitement : Appliquez un fongicide à base de cuivre dès que le temps devient humide et chaud.\n\n" +
+           "🚜 Prévention : Paillez le sol pour éviter les éclaboussures de terre et pratiquez une rotation des cultures sur 3 ans.";
   }
   if (l.includes("late_blight")) {
-    return "Mildiou : traitez immediatement avec un produit a base de mancozebe ou de cuivre. Surveillez l'humidite.";
+    return "💡 Action immédiate : Arrachez immédiatement les plants sévèrement touchés (taches huileuses et feutrage blanc sous les feuilles).\n\n" +
+           "🛡️ Traitement : Traitez sans attendre avec un fongicide à base de cuivre ou de métalaxyl.\n\n" +
+           "🚜 Prévention : Évitez absolument l'arrosage par aspersion sur le feuillage et espacez les plants pour faciliter le séchage.";
   }
   if (l.includes("yellow_leaf_curl")) {
-    return "Virus (TYLCV) : controlez les populations d'aleurodes avec des filets ou des traitements bio.";
+    return "💡 Action immédiate : Éliminez et brûlez les plants atteints (feuilles enroulées en cuillère et jaunies) pour stopper la contamination.\n\n" +
+           "🛡️ Traitement : Aucun traitement curatif. Traitez l'insecte vecteur (l'aleurode/mouche blanche) avec des huiles végétales ou du savon noir.\n\n" +
+           "🚜 Prévention : Installez des pièges collants jaunes et utilisez des filets anti-insectes en pépinière.";
   }
   if (l.includes("healthy") || l.includes("sain")) {
-    return "La plante semble en excellente sante. Continuez une surveillance reguliere et un bon entretien.";
+    return "💡 Action immédiate : Votre plante est vigoureuse et ne présente aucun symptôme de maladie.\n\n" +
+           "🚜 Prévention : Maintenez un désherbage propre, arrosez régulièrement au pied et inspectez vos feuilles deux fois par semaine pour prévenir tout départ épidémique.";
   }
 
-  return `Diagnostic : ${cleanLabel(label)}. Nous vous conseillons de consulter un agent de vulgarisation agricole pour un protocole de traitement precis.`;
+  return `💡 Action immédiate : Diagnostic identifié comme ${cleanLabel(label)}.\n\n` +
+         `🚜 Recommandation : Nous vous conseillons de contacter un technicien de l'ANADER pour obtenir un protocole de traitement adapté.`;
 }

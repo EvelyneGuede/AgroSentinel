@@ -14,6 +14,7 @@ type ServiceCardProps = {
 export function ServiceCard({ title, subtitle, icon, color, onPress }: ServiceCardProps) {
   return (
     <Pressable onPress={onPress} style={({ pressed }) => [styles.card, pressed && styles.pressed]}>
+      <View style={[styles.cardAccent, { backgroundColor: color }]} />
       <View style={[styles.iconWrap, { backgroundColor: `${color}15` }]}>
         <MaterialIcons name={icon} size={22} color={color} />
       </View>
@@ -30,30 +31,38 @@ export function ServiceCard({ title, subtitle, icon, color, onPress }: ServiceCa
 
 const styles = StyleSheet.create({
   card: {
-    minHeight: 80,
+    minHeight: 86,
     marginBottom: 12,
     padding: 14,
-    borderRadius: 14,
+    borderRadius: 18,
     borderWidth: 1,
     borderColor: colors.borderLight,
-    backgroundColor: colors.surface,
+    backgroundColor: colors.surfaceAlt,
     flexDirection: "row",
     alignItems: "center",
-    shadowColor: "#0A0A0A",
-    shadowOpacity: 0.04,
+    shadowColor: "#0F172A",
+    shadowOpacity: 0.05,
     shadowRadius: 12,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 3
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 3,
+    overflow: "hidden"
   },
   pressed: {
-    opacity: 0.8,
+    opacity: 0.9,
     borderColor: colors.border,
     transform: [{ scale: 0.98 }]
   },
+  cardAccent: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    bottom: 0,
+    width: 4
+  },
   iconWrap: {
-    width: 44,
-    height: 44,
-    borderRadius: 12,
+    width: 46,
+    height: 46,
+    borderRadius: 14,
     alignItems: "center",
     justifyContent: "center"
   },
@@ -70,14 +79,14 @@ const styles = StyleSheet.create({
   subtitle: {
     color: colors.muted,
     fontSize: 12,
-    marginTop: 2,
+    marginTop: 3,
     lineHeight: 16
   },
   chevronWrap: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: colors.background,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: colors.surface,
     alignItems: "center",
     justifyContent: "center"
   }

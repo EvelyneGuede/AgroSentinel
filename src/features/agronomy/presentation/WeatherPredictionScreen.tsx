@@ -1,9 +1,10 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Location from "expo-location";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   ActivityIndicator,
+  Animated,
   Pressable,
   RefreshControl,
   ScrollView,
@@ -27,6 +28,41 @@ const demoCities: Record<string, [number, number]> = {
   Bouake: [7.6833, -5.0333]
 };
 
+export function Skeleton({ style }: { style: any }) {
+  const opacity = useRef(new Animated.Value(0.3)).current;
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(opacity, {
+          toValue: 0.7,
+          duration: 800,
+          useNativeDriver: true
+        }),
+        Animated.timing(opacity, {
+          toValue: 0.3,
+          duration: 800,
+          useNativeDriver: true
+        })
+      ])
+    ).start();
+  }, [opacity]);
+
+  return <Animated.View style={[style, { opacity }]} />;
+}
+
+function WeatherSkeleton() {
+  return (
+    <View style={styles.skeletonContainer}>
+      <Skeleton style={styles.skeletonCard} />
+      <Skeleton style={styles.skeletonTitle} />
+      <Skeleton style={styles.skeletonTile} />
+      <Skeleton style={styles.skeletonTile} />
+      <Skeleton style={styles.skeletonTile} />
+    </View>
+  );
+}
+
 export function WeatherPredictionScreen({ onBack }: WeatherPredictionScreenProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [weatherData, setWeatherData] = useState<AgroWeather | null>(null);
@@ -49,9 +85,9 @@ export function WeatherPredictionScreen({ onBack }: WeatherPredictionScreenProps
         const position = await determinePosition();
         lat = position.latitude;
         lon = position.longitude;
-        setStatusMessage("Position GPS Reelle");
+        setStatusMessage("Position GPS Réelle");
       } catch {
-        setStatusMessage(`GPS bloque : Mode Simulation (${city})`);
+        setStatusMessage(`GPS bloqué : Simulation (${city})`);
       }
     } else {
       setStatusMessage(`Mode Simulation (${city})`);
@@ -70,7 +106,7 @@ export function WeatherPredictionScreen({ onBack }: WeatherPredictionScreenProps
   return (
     <View style={styles.container}>
       <AppHeader
-        title="⛅ Meteo Agro-Predictive"
+        title="⛅ Météo Agro-Prédictive"
         color={colors.orange}
         onBack={onBack}
         rightActions={
@@ -79,56 +115,54 @@ export function WeatherPredictionScreen({ onBack }: WeatherPredictionScreenProps
           </Pressable>
         }
       />
-      {isLoading ? (
-        <View style={styles.loading}>
-          <ActivityIndicator color={colors.orange} size="large" />
-          <Text style={styles.loadingText}>{statusMessage}</Text>
-        </View>
-      ) : (
-        <ScrollView
-          contentContainerStyle={styles.content}
-          refreshControl={<RefreshControl refreshing={isLoading} onRefresh={() => loadWeather(selectedCity, false)} />}
-        >
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.cityRow}>
-            {Object.keys(demoCities).map((city) => (
-              <Pressable
-                key={city}
-                onPress={() => selectCity(city)}
-                style={[styles.cityChip, city === selectedCity && styles.cityChipSelected]}
-              >
-                <Text style={[styles.cityChipText, city === selectedCity && styles.cityChipTextSelected]}>{city}</Text>
-              </Pressable>
-            ))}
-          </ScrollView>
-
-          {weatherData ? (
-            <>
-              <WeatherCard city={selectedCity} data={weatherData} status={statusMessage} />
-              <Text style={styles.riskTitle}>Risques Maladies (Calcul IA)</Text>
-              <RiskTile label="Mildiou (Tomate)" value={weatherData.mildiouRisk} color={colors.red} />
-              <RiskTile label="Pourriture Brune (Cacao)" value={weatherData.brownRotRisk} color={colors.orange} />
-              <RiskTile
-                label="Anthracnose (Mangue)"
-                value={weatherData.humidity > 70 ? 0.8 : 0.3}
-                color={colors.blue}
-              />
-            </>
-          ) : null}
+      
+      <ScrollView
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+        refreshControl={<RefreshControl refreshing={isLoading} onRefresh={() => loadWeather(selectedCity, false)} />}
+      >
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.cityRow}>
+          {Object.keys(demoCities).map((city) => (
+            <Pressable
+              key={city}
+              disabled={isLoading}
+              onPress={() => selectCity(city)}
+              style={[styles.cityChip, city === selectedCity && styles.cityChipSelected]}
+            >
+              <Text style={[styles.cityChipText, city === selectedCity && styles.cityChipTextSelected]}>{city}</Text>
+            </Pressable>
+          ))}
         </ScrollView>
-      )}
+
+        {isLoading ? (
+          <WeatherSkeleton />
+        ) : weatherData ? (
+          <>
+            <WeatherCard city={selectedCity} data={weatherData} status={statusMessage} />
+            <Text style={styles.riskTitle}>Risques Maladies (Calcul IA)</Text>
+            <RiskTile label="Mildiou (Tomate)" value={weatherData.mildiouRisk} color={colors.red} />
+            <RiskTile label="Pourriture Brune (Cacao)" value={weatherData.brownRotRisk} color={colors.orange} />
+            <RiskTile
+              label="Anthracnose (Mangue)"
+              value={weatherData.humidity > 70 ? 0.8 : 0.3}
+              color={colors.greenMedium}
+            />
+          </>
+        ) : null}
+      </ScrollView>
     </View>
   );
 }
 
 function WeatherCard({ city, data, status }: { city: string; data: AgroWeather; status: string }) {
   return (
-    <LinearGradient colors={["#F59E0B", "#C2410C"]} style={styles.weatherCard}>
+    <LinearGradient colors={[colors.orange, colors.orangeDark]} style={styles.weatherCard}>
       <Text style={styles.weatherCity}>{city.toUpperCase()}</Text>
       <Text style={styles.weatherTemp}>{data.temp.toFixed(1)}°C</Text>
       <Text style={styles.weatherCondition}>{data.condition}</Text>
       <Text style={styles.weatherStatus}>{status}</Text>
       <View style={styles.weatherInfoRow}>
-        <InfoItem icon="water-drop" value={`${Math.round(data.humidity)}%`} label="Humidite" />
+        <InfoItem icon="water-drop" value={`${Math.round(data.humidity)}%`} label="Humidité" />
         <InfoItem icon="air" value="14 km/h" label="Vent" />
       </View>
     </LinearGradient>
@@ -169,7 +203,7 @@ function RiskTile({ label, value, color }: { label: string; value: number; color
 
 async function determinePosition() {
   const permission = await Location.requestForegroundPermissionsAsync();
-  if (permission.status !== "granted") throw new Error("GPS bloque");
+  if (permission.status !== "granted") throw new Error("GPS bloqué");
   const position = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced });
   return {
     latitude: position.coords.latitude,
@@ -188,19 +222,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
-  loading: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 20
-  },
-  loadingText: {
-    marginTop: 16,
-    color: colors.gray,
-    fontStyle: "italic"
-  },
   content: {
-    padding: 20,
+    padding: 16,
     paddingBottom: 32
   },
   cityRow: {
@@ -209,52 +232,54 @@ const styles = StyleSheet.create({
   },
   cityChip: {
     minHeight: 36,
-    paddingHorizontal: 13,
+    paddingHorizontal: 14,
     borderRadius: 18,
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: colors.borderLight,
     backgroundColor: colors.surface,
     alignItems: "center",
     justifyContent: "center"
   },
   cityChipSelected: {
     borderColor: colors.orange,
-    backgroundColor: "#FFF4E5"
+    backgroundColor: colors.orangeLight
   },
   cityChipText: {
-    color: colors.gray,
+    color: colors.muted,
     fontSize: 12,
-    fontWeight: "800"
+    fontWeight: "700"
   },
   cityChipTextSelected: {
-    color: colors.orange
+    color: colors.orangeDark
   },
   weatherCard: {
     width: "100%",
-    padding: 25,
-    borderRadius: 8,
+    padding: 24,
+    borderRadius: 16,
     alignItems: "center",
     shadowColor: colors.orange,
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.15,
     shadowRadius: 18,
-    shadowOffset: { width: 0, height: 10 },
+    shadowOffset: { width: 0, height: 8 },
     elevation: 4
   },
   weatherCity: {
     color: "rgba(255,255,255,0.72)",
     fontSize: 12,
-    fontWeight: "900"
+    fontWeight: "700"
   },
   weatherTemp: {
     color: "#FFFFFF",
-    fontSize: 58,
-    fontWeight: "900",
-    marginTop: 8
+    fontSize: 54,
+    fontWeight: "700",
+    marginTop: 8,
+    letterSpacing: -1
   },
   weatherCondition: {
     color: "#FFFFFF",
-    fontSize: 19,
-    fontWeight: "700"
+    fontSize: 18,
+    fontWeight: "700",
+    marginTop: 2
   },
   weatherStatus: {
     marginTop: 8,
@@ -273,26 +298,32 @@ const styles = StyleSheet.create({
   infoValue: {
     marginTop: 4,
     color: "#FFFFFF",
-    fontWeight: "900"
+    fontWeight: "700"
   },
   infoLabel: {
     color: "rgba(255,255,255,0.58)",
     fontSize: 11
   },
   riskTitle: {
-    marginTop: 25,
-    marginBottom: 14,
+    marginTop: 24,
+    marginBottom: 12,
     color: colors.text,
-    fontSize: 18,
-    fontWeight: "900"
+    fontSize: 16,
+    fontWeight: "700",
+    letterSpacing: -0.2
   },
   riskTile: {
-    marginBottom: 14,
-    padding: 15,
-    borderRadius: 8,
+    marginBottom: 12,
+    padding: 14,
+    borderRadius: 14,
     borderWidth: 1,
-    borderColor: colors.border,
-    backgroundColor: colors.surface
+    borderColor: colors.borderLight,
+    backgroundColor: colors.surface,
+    shadowColor: "#000000",
+    shadowOpacity: 0.02,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2
   },
   riskHeader: {
     flexDirection: "row",
@@ -304,19 +335,42 @@ const styles = StyleSheet.create({
     flex: 1,
     color: colors.text,
     fontSize: 14,
-    fontWeight: "900"
+    fontWeight: "700",
+    letterSpacing: -0.1
   },
   riskScore: {
-    fontWeight: "900"
+    fontWeight: "700"
   },
   riskTrack: {
     height: 8,
     overflow: "hidden",
     borderRadius: 4,
-    backgroundColor: "#EEF2F6"
+    backgroundColor: colors.borderLight
   },
   riskFill: {
     height: "100%",
     borderRadius: 4
+  },
+  skeletonContainer: {
+    paddingVertical: 4
+  },
+  skeletonCard: {
+    height: 180,
+    borderRadius: 16,
+    backgroundColor: colors.borderLight,
+    marginBottom: 24
+  },
+  skeletonTitle: {
+    width: "60%",
+    height: 20,
+    borderRadius: 6,
+    backgroundColor: colors.borderLight,
+    marginBottom: 16
+  },
+  skeletonTile: {
+    height: 64,
+    borderRadius: 14,
+    backgroundColor: colors.borderLight,
+    marginBottom: 12
   }
 });

@@ -159,7 +159,7 @@ function buildResponse(query: string) {
   if (q.includes("qui es-tu") || q.includes("intelligence")) {
     return "Je suis JEYSI.AI, votre conseiller agricole intelligent. Je peux analyser vos cultures et me connecter aux donnees meteo mondiales pour vous aider.";
   }
-  return "Question interessante. D'apres mes recherches sur le reseau AgriIntell, je vous suggere de verifier l'humidite de votre sol et de consulter nos alertes de la Sentinelle Epidemique.";
+  return "Question intéressante. D'après mes recherches sur le réseau AgroSentinel, je vous suggère de vérifier l'humidité de votre sol et de consulter nos alertes de la Sentinelle Épidémique.";
 }
 
 function wait(ms: number) {

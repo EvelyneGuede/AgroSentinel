@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { SafeAreaView, StatusBar, StyleSheet } from "react-native";
-import { initializeDatabase } from "./src/core/services/databaseService";
+import { getSetting, initializeDatabase, setSetting } from "./src/core/services/databaseService";
 import { DiagnosticScreen } from "./src/features/agronomy/presentation/DiagnosticScreen";
 import { SentinelMapScreen } from "./src/features/agronomy/presentation/SentinelMapScreen";
 import { VocalAdvisorScreen } from "./src/features/agronomy/presentation/VocalAdvisorScreen";
@@ -10,16 +10,26 @@ import { LogisticsGroupingScreen } from "./src/features/logistics/presentation/L
 import { MarketplaceScreen } from "./src/features/logistics/presentation/MarketplaceScreen";
 import { ROICalculatorScreen } from "./src/features/logistics/presentation/ROICalculatorScreen";
 import { HomeScreen } from "./src/features/shared/presentation/HomeScreen";
+import { OnboardingScreen } from "./src/features/shared/presentation/OnboardingScreen";
 import { SplashScreen } from "./src/features/shared/presentation/SplashScreen";
 import { colors } from "./src/theme/colors";
 import { AppScreen } from "./src/types/navigation";
 
 export default function App() {
   const [stack, setStack] = useState<AppScreen[]>(["splash"]);
+  const [isOnboardingCompleted, setIsOnboardingCompleted] = useState<boolean | null>(null);
+
   const currentScreen = stack[stack.length - 1];
 
   useEffect(() => {
-    initializeDatabase().catch(() => undefined);
+    initializeDatabase()
+      .then(async () => {
+        const completed = await getSetting("onboarding_completed", "false");
+        setIsOnboardingCompleted(completed === "true");
+      })
+      .catch(() => {
+        setIsOnboardingCompleted(false);
+      });
   }, []);
 
   const navigate = useCallback((screen: AppScreen) => {
@@ -30,10 +40,26 @@ export default function App() {
     setStack((previous) => (previous.length <= 1 ? ["home"] : previous.slice(0, -1)));
   }, []);
 
+  const handleSplashDone = useCallback(() => {
+    if (isOnboardingCompleted) {
+      navigate("home");
+    } else {
+      navigate("onboarding");
+    }
+  }, [isOnboardingCompleted, navigate]);
+
+  const handleOnboardingComplete = useCallback(async () => {
+    await setSetting("onboarding_completed", "true");
+    setIsOnboardingCompleted(true);
+    navigate("home");
+  }, [navigate]);
+
   const content = useMemo(() => {
     switch (currentScreen) {
       case "splash":
-        return <SplashScreen onDone={() => navigate("home")} />;
+        return <SplashScreen onDone={handleSplashDone} />;
+      case "onboarding":
+        return <OnboardingScreen onComplete={handleOnboardingComplete} />;
       case "diagnostic":
         return <DiagnosticScreen onBack={goBack} />;
       case "vocal":
@@ -52,7 +78,7 @@ export default function App() {
       default:
         return <HomeScreen navigate={navigate} dashboard={<NationalDashboardScreen />} />;
     }
-  }, [currentScreen, goBack, navigate]);
+  }, [currentScreen, goBack, navigate, handleSplashDone, handleOnboardingComplete]);
 
   return (
     <SafeAreaView style={styles.safeArea}>

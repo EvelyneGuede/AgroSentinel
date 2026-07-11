@@ -1,5 +1,6 @@
 export type AppScreen =
   | "splash"
+  | "onboarding"
   | "home"
   | "diagnostic"
   | "vocal"

@@ -9,20 +9,21 @@ type SplashScreenProps = {
 
 export function SplashScreen({ onDone }: SplashScreenProps) {
   useEffect(() => {
-    const timer = setTimeout(onDone, 3000);
+    const timer = setTimeout(onDone, 2600);
     return () => clearTimeout(timer);
   }, [onDone]);
 
   return (
-    <LinearGradient colors={[colors.white, colors.orangeLight]} style={styles.container}>
+    <LinearGradient colors={[colors.white, colors.orangeLight, colors.greenLight]} style={styles.container}>
+      <View style={styles.glow} />
       <View style={styles.logoShell}>
         <Image source={require("../../../../assets/logo.png")} resizeMode="contain" style={styles.logo} />
       </View>
       <Text style={styles.title}>
-        AgriIntell<Text style={styles.titleAccent}> CI</Text>
+        Agro<Text style={styles.titleAccent}>Sentinel</Text>
       </Text>
       <Text style={styles.subtitle}>L'IA au service de la terre</Text>
-      <ActivityIndicator color={colors.green} size="large" style={styles.loader} />
+      <ActivityIndicator color={colors.orange} size="large" style={styles.loader} />
     </LinearGradient>
   );
 }
@@ -34,18 +35,27 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: 24
   },
+  glow: {
+    position: "absolute",
+    width: 220,
+    height: 220,
+    borderRadius: 110,
+    backgroundColor: `${colors.green}12`,
+    top: 120,
+    right: -40
+  },
   logoShell: {
-    width: 180,
-    height: 180,
-    borderRadius: 90,
+    width: 182,
+    height: 182,
+    borderRadius: 91,
     backgroundColor: colors.white,
     alignItems: "center",
     justifyContent: "center",
     shadowColor: colors.orange,
-    shadowOpacity: 0.15,
+    shadowOpacity: 0.2,
     shadowRadius: 24,
     shadowOffset: { width: 0, height: 8 },
-    elevation: 8,
+    elevation: 9,
     borderWidth: 1,
     borderColor: colors.orangeBorder
   },
@@ -55,7 +65,7 @@ const styles = StyleSheet.create({
     borderRadius: 75
   },
   title: {
-    marginTop: 32,
+    marginTop: 30,
     color: colors.text,
     fontSize: 32,
     fontWeight: "800",
@@ -68,10 +78,10 @@ const styles = StyleSheet.create({
     marginTop: 6,
     color: colors.greenMedium,
     fontSize: 15,
-    fontWeight: "600",
+    fontWeight: "700",
     letterSpacing: 0.2
   },
   loader: {
-    marginTop: 48
+    marginTop: 46
   }
 });

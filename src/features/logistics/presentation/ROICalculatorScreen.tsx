@@ -67,13 +67,13 @@ export function ROICalculatorScreen({ onBack }: ROICalculatorScreenProps) {
           title="RISQUE FINANCIER (SANS IA)"
           value={result.loss}
           color={colors.red}
-          subtitle="Perte estimee due aux maladies non detectees."
+          subtitle="Perte estimée due aux maladies non détectées."
         />
         <ResultCard
-          title="VALEUR SAUVEE PAR AGRIINTELL"
+          title="VALEUR SAUVÉE PAR AGROSENTINEL"
           value={result.gain}
           color={colors.green}
-          subtitle="Revenu additionnel grace au diagnostic precoce."
+          subtitle="Revenu additionnel grâce au diagnostic précoce."
         />
         <Text style={styles.footer}>Donnees basees sur les rendements moyens de l'ANADER (CI)</Text>
       </ScrollView>

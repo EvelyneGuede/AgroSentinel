@@ -47,7 +47,7 @@ export function NationalDashboardScreen() {
       
       <View style={styles.mapBox}>
         <MapView style={styles.map} initialRegion={nationalRegion}>
-          <UrlTile maximumZ={19} urlTemplate="https://tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          <UrlTile maximumZ={19} urlTemplate="https://api.mapbox.com/styles/v1/mapbox/light-v11/tiles/256/{z}/{x}/{y}?access_token=REDACTED_MAPBOX_TOKEN" />
           <Circle
             center={{ latitude: 6.8276, longitude: -5.2767 }}
             radius={15000}

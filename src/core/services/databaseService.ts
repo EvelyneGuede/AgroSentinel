@@ -25,12 +25,39 @@ async function getDatabase() {
       risk_level TEXT,
       is_synced INTEGER
     );
+    CREATE TABLE IF NOT EXISTS settings(
+      key TEXT PRIMARY KEY,
+      value TEXT
+    );
   `);
   return db;
 }
 
 export async function initializeDatabase() {
   await getDatabase();
+}
+
+export async function getSetting(key: string, defaultValue: string): Promise<string> {
+  try {
+    const db = await getDatabase();
+    const row = await db.getFirstAsync<{ value: string }>(
+      "SELECT value FROM settings WHERE key = ?",
+      [key]
+    );
+    return row ? row.value : defaultValue;
+  } catch {
+    return defaultValue;
+  }
+}
+
+export async function setSetting(key: string, value: string): Promise<void> {
+  try {
+    const db = await getDatabase();
+    await db.runAsync(
+      "INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)",
+      [key, value]
+    );
+  } catch {}
 }
 
 export async function insertDiagnostic(diagnostic: DiagnosticModel) {

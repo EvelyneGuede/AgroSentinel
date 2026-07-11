@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "AgriIntell CI",
-    "slug": "inza-agriintell-ci",
+    "name": "AgroSentinel",
+    "slug": "agrosentinel",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/logo.png",
@@ -11,16 +11,16 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "ci.agriintell.inza",
+      "bundleIdentifier": "ci.agrosentinel.inza",
       "infoPlist": {
-        "NSCameraUsageDescription": "AgriIntell CI utilise la camera pour analyser les feuilles.",
-        "NSPhotoLibraryUsageDescription": "AgriIntell CI utilise la galerie pour analyser des photos de cultures.",
-        "NSLocationWhenInUseUsageDescription": "AgriIntell CI utilise votre position pour cartographier les alertes agricoles.",
-        "NSMicrophoneUsageDescription": "AgriIntell CI utilise le microphone pour le conseiller vocal."
+        "NSCameraUsageDescription": "AgroSentinel utilise la camera pour analyser les feuilles.",
+        "NSPhotoLibraryUsageDescription": "AgroSentinel utilise la galerie pour analyser des photos de cultures.",
+        "NSLocationWhenInUseUsageDescription": "AgroSentinel utilise votre position pour cartographier les alertes agricoles.",
+        "NSMicrophoneUsageDescription": "AgroSentinel utilise le microphone pour le conseiller vocal."
       }
     },
     "android": {
-      "package": "ci.agriintell.inza",
+      "package": "ci.agrosentinel.inza",
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#38B000"
@@ -40,21 +40,21 @@
       [
         "expo-camera",
         {
-          "cameraPermission": "AgriIntell CI utilise la camera pour analyser les feuilles.",
-          "microphonePermission": "AgriIntell CI utilise le microphone pour le conseiller vocal.",
+          "cameraPermission": "AgroSentinel utilise la camera pour analyser les feuilles.",
+          "microphonePermission": "AgroSentinel utilise le microphone pour le conseiller vocal.",
           "recordAudioAndroid": true
         }
       ],
       [
         "expo-image-picker",
         {
-          "photosPermission": "AgriIntell CI utilise la galerie pour analyser des photos de cultures."
+          "photosPermission": "AgroSentinel utilise la galerie pour analyser des photos de cultures."
         }
       ],
       [
         "expo-location",
         {
-          "locationWhenInUsePermission": "AgriIntell CI utilise votre position pour cartographier les alertes agricoles."
+          "locationWhenInUsePermission": "AgroSentinel utilise votre position pour cartographier les alertes agricoles."
         }
       ],
       "expo-sqlite",
