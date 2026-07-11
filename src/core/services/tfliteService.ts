@@ -1,4 +1,5 @@
 import { loadTensorflowModel, TensorflowModel } from "react-native-fast-tflite";
+import { Asset } from "expo-asset";
 import * as ImageManipulator from "expo-image-manipulator";
 import * as FileSystem from "expo-file-system";
 import jpeg from "jpeg-js";
@@ -51,8 +52,19 @@ export async function loadModel(type: CultureType): Promise<TensorflowModel> {
   if (modelCache[type]) {
     return modelCache[type]!;
   }
-  const modelAsset = modelAssets[type];
-  const loadedModel = await loadTensorflowModel(modelAsset, []);
+
+  // Dans une build Expo Android, `require()` résout un asset vers un identifiant
+  // (ex. "assets_iacacao...") et non vers une URL exploitable par Fast TFLite.
+  // Expo Asset le matérialise dans le stockage de l'application, puis Fast TFLite
+  // peut le lire avec l'URL locale `file://`.
+  const asset = Asset.fromModule(modelAssets[type]);
+  await asset.downloadAsync();
+
+  if (!asset.localUri) {
+    throw new Error(`Impossible de préparer le modèle ${type} pour l'analyse locale.`);
+  }
+
+  const loadedModel = await loadTensorflowModel({ url: asset.localUri }, []);
   modelCache[type] = loadedModel;
   return loadedModel;
 }

@@ -132,6 +132,40 @@ npx expo run:android
 npx expo run:ios
 ```
 
+### Génération d’un APK Android avec EAS
+
+1. Installer EAS CLI si nécessaire :
+
+```bash
+npm install -g eas-cli
+```
+
+2. Se connecter à Expo :
+
+```bash
+eas login
+```
+
+3. Construire l’APK de production :
+
+```bash
+npm run eas:build:android:prod
+```
+
+4. Construire un APK de développement interne :
+
+```bash
+npm run eas:build:android:dev
+```
+
+5. Construire un APK de prévisualisation :
+
+```bash
+npm run eas:build:android:preview
+```
+
+> Note : EAS se charge de la génération du keystore. Pour une signature personnalisée, utilisez `eas credentials`.
+
 ### Vérification TypeScript
 
 ```bash

@@ -8,12 +8,16 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "eas:build:android:dev": "eas build --platform android --profile development",
+    "eas:build:android:preview": "eas build --platform android --profile preview",
+    "eas:build:android:prod": "eas build --platform android --profile production"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
     "@types/jpeg-js": "^0.3.0",
     "expo": "~54.0.0",
+    "expo-asset": "~12.0.13",
     "expo-camera": "~17.0.10",
     "expo-file-system": "~19.0.23",
     "expo-font": "~14.0.12",

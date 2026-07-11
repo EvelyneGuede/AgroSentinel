@@ -25,9 +25,10 @@
         "backgroundColor": "#38B000"
       },
       "permissions": [
-        "CAMERA",
-        "ACCESS_FINE_LOCATION",
-        "ACCESS_COARSE_LOCATION"
+        "android.permission.CAMERA",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.RECORD_AUDIO"
       ]
     },
     "web": {
@@ -55,7 +56,13 @@
       ],
       "expo-sqlite",
       "expo-font",
-      "react-native-fast-tflite"
-    ]
+      "react-native-fast-tflite",
+      "expo-asset"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "9ac98bf8-b937-45e0-ba3a-aaaabe2b5cbb"
+      }
+    }
   }
 }
