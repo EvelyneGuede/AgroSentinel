@@ -15,8 +15,7 @@
       "infoPlist": {
         "NSCameraUsageDescription": "AgroSentinel utilise la camera pour analyser les feuilles.",
         "NSPhotoLibraryUsageDescription": "AgroSentinel utilise la galerie pour analyser des photos de cultures.",
-        "NSLocationWhenInUseUsageDescription": "AgroSentinel utilise votre position pour cartographier les alertes agricoles.",
-        "NSMicrophoneUsageDescription": "AgroSentinel utilise le microphone pour le conseiller vocal."
+        "NSLocationWhenInUseUsageDescription": "AgroSentinel utilise votre position approximative, uniquement si vous l'autorisez, pour enregistrer un diagnostic local."
       }
     },
     "android": {
@@ -28,9 +27,7 @@
       "permissions": [
         "CAMERA",
         "ACCESS_FINE_LOCATION",
-        "ACCESS_COARSE_LOCATION",
-        "RECORD_AUDIO",
-        "READ_EXTERNAL_STORAGE"
+        "ACCESS_COARSE_LOCATION"
       ]
     },
     "web": {
@@ -41,8 +38,7 @@
         "expo-camera",
         {
           "cameraPermission": "AgroSentinel utilise la camera pour analyser les feuilles.",
-          "microphonePermission": "AgroSentinel utilise le microphone pour le conseiller vocal.",
-          "recordAudioAndroid": true
+          "recordAudioAndroid": false
         }
       ],
       [
@@ -58,7 +54,8 @@
         }
       ],
       "expo-sqlite",
-      "expo-font"
+      "expo-font",
+      "react-native-fast-tflite"
     ]
   }
 }

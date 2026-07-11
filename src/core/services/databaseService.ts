@@ -34,7 +34,11 @@ async function getDatabase() {
 }
 
 export async function initializeDatabase() {
-  await getDatabase();
+  const db = await getDatabase();
+  // Les diagnostics sont conservés localement pendant 30 jours au maximum.
+  await db.runAsync("DELETE FROM diagnostics WHERE date < ?", [new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()]);
+  // Réduit la précision des données créées par les anciennes versions.
+  await db.runAsync("UPDATE diagnostics SET latitude = ROUND(latitude, 3), longitude = ROUND(longitude, 3) WHERE latitude IS NOT NULL AND longitude IS NOT NULL");
 }
 
 export async function getSetting(key: string, defaultValue: string): Promise<string> {
@@ -84,6 +88,11 @@ export async function getAllDiagnostics() {
   const db = await getDatabase();
   const rows = await db.getAllAsync<DiagnosticRow>("SELECT * FROM diagnostics ORDER BY id DESC");
   return rows.map(diagnosticFromRow);
+}
+
+export async function deleteAllDiagnostics() {
+  const db = await getDatabase();
+  await db.runAsync("DELETE FROM diagnostics");
 }
 
 export async function markAsSynced(id: number) {

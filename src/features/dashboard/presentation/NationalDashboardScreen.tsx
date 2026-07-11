@@ -1,7 +1,7 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, Alert, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import MapView, { Circle, Region, UrlTile } from "react-native-maps";
+import MapView, { Region } from "react-native-maps";
 import {
   getSyncCount,
   subscribeToSync,
@@ -29,13 +29,11 @@ export function NationalDashboardScreen() {
 
   async function handleSync() {
     setIsSyncing(true);
-    const success = await synchronizeData();
+    const result = await synchronizeData();
     setIsSyncing(false);
     Alert.alert(
       "Synchronisation",
-      success
-        ? "Synchronisation réussie avec la Gateway Nationale"
-        : "Flux de données mis à jour (Mode Démo)"
+      result.message
     );
   }
 
@@ -43,44 +41,27 @@ export function NationalDashboardScreen() {
     <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
       <HeaderStats syncCount={syncCount} />
       
-      <Text style={styles.sectionTitle}>Cartographie Épidémique Nationale</Text>
+      <Text style={styles.sectionTitle}>Cartographie locale — aucune donnée nationale</Text>
       
       <View style={styles.mapBox}>
-        <MapView style={styles.map} initialRegion={nationalRegion}>
-          <UrlTile maximumZ={19} urlTemplate="https://api.mapbox.com/styles/v1/mapbox/light-v11/tiles/256/{z}/{x}/{y}?access_token=REDACTED_MAPBOX_TOKEN" />
-          <Circle
-            center={{ latitude: 6.8276, longitude: -5.2767 }}
-            radius={15000}
-            fillColor="rgba(183,28,28,0.22)"
-            strokeColor={colors.red}
-            strokeWidth={1.5}
-          />
-          {syncCount > 0 ? (
-            <Circle
-              center={{ latitude: 7.6833, longitude: -5.0333 }}
-              radius={10000}
-              fillColor="rgba(249,115,22,0.22)"
-              strokeColor={colors.orange}
-              strokeWidth={1.5}
-            />
-          ) : null}
+        <MapView mapType="none" style={styles.map} initialRegion={nationalRegion}>
         </MapView>
       </View>
       
-      <Text style={styles.sectionTitle}>Flux d'Approvisionnement</Text>
+      <Text style={styles.sectionTitle}>Flux d'approvisionnement — simulation locale</Text>
       
       <SupplyFlowCard
         product="Cacao"
         volume={`${1200 + syncCount * 10} T`}
         trend="+12%"
-        status="Sécurisé"
+        status="Simulation"
         color={colors.orange}
       />
       <SupplyFlowCard
         product="Vivrier (Tomate/Maïs)"
         volume={`${450 + syncCount * 5} T`}
         trend="+25%"
-        status="Flux Optimal"
+        status="Simulation"
         color={colors.green}
       />
       
@@ -90,7 +71,7 @@ export function NationalDashboardScreen() {
         ) : (
           <MaterialIcons name="sync" size={20} color="#FFFFFF" />
         )}
-        <Text style={styles.syncText}>LANCER LA SYNCHRONISATION NATIONALE</Text>
+        <Text style={styles.syncText}>VÉRIFIER LA CONFIGURATION DE SYNCHRONISATION</Text>
       </Pressable>
     </ScrollView>
   );
@@ -102,24 +83,24 @@ function HeaderStats({ syncCount }: { syncCount: number }) {
       <View style={styles.stats}>
         <StatItem 
           label="Alertes" 
-          value={`${14 + syncCount}`} 
+          value={syncCount > 0 ? `${syncCount}` : "—"}
           icon="warning" 
           color={colors.red} 
-          subtext="en temps réel"
+          subtext="données locales"
         />
         <StatItem 
           label="Producteurs" 
-          value={`${450 + syncCount}`} 
+          value="—"
           icon="people" 
           color={colors.green}
-          subtext="connectés"
+          subtext="non connecté"
         />
         <StatItem
           label="Impact CI"
-          value={`${(1.2 + syncCount * 0.1).toFixed(1)} Md`}
+          value="—"
           icon="trending-up"
           color={colors.orange}
-          subtext="FCFA à risque"
+          subtext="non calculé"
         />
       </View>
     </View>

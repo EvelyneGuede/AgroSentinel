@@ -3,6 +3,7 @@ import * as Speech from "expo-speech";
 import React, { useState } from "react";
 import {
   ActivityIndicator,
+  Alert,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -32,7 +33,7 @@ export function VocalAdvisorScreen({ onBack }: VocalAdvisorScreenProps) {
 
     setIsSearching(true);
     setText(cleanQuery);
-    await wait(2000);
+    await wait(250);
 
     const responseText = buildResponse(cleanQuery);
     setResponse(responseText);
@@ -52,16 +53,12 @@ export function VocalAdvisorScreen({ onBack }: VocalAdvisorScreenProps) {
       return;
     }
 
-    setIsListening(true);
-    setTimeout(() => {
-      setIsListening(false);
-      generateDynamicResponse("Que faire pour le cacao ?");
-    }, 900);
+    Alert.alert("Saisie vocale non disponible", "Cette démo ne transcrit pas le microphone. Saisissez votre question au clavier.");
   }
 
   return (
     <View style={styles.container}>
-      <AppHeader title="🎤 Conseiller Vocal IA" color={colors.orange} onBack={onBack} />
+      <AppHeader title="Conseiller agricole — démo locale" color={colors.orange} onBack={onBack} />
       {isSearching ? <View style={styles.progressBar} /> : null}
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
@@ -99,8 +96,8 @@ export function VocalAdvisorScreen({ onBack }: VocalAdvisorScreenProps) {
             </View>
           ) : null}
           <Bubble sender="Vous" message={text} isUser />
-          {isSearching ? <Bubble sender="JEYSI.AI" message="Recherche sur le net..." /> : null}
-          {response ? <Bubble sender="JEYSI.AI" message={response} /> : null}
+          {isSearching ? <Bubble sender="Assistant local" message="Préparation d'une réponse de démonstration..." /> : null}
+          {response ? <Bubble sender="Assistant local" message={response} /> : null}
         </ScrollView>
         <View style={styles.inputArea}>
           <TextInput
@@ -145,21 +142,21 @@ function Bubble({
 function buildResponse(query: string) {
   const q = query.toLowerCase();
   if (q.includes("cacao")) {
-    return "Pour le Cacao : la campagne actuelle en Cote d'Ivoire montre une hausse des prix. Attention a la Pourriture Brune, traitez avec des fongicides cuivriques si l'humidite depasse 80%.";
+    return "Conseil général : surveillez les cabosses et réduisez l'humidité par l'entretien de la parcelle. Faites confirmer tout traitement par un conseiller agricole local et utilisez uniquement des produits homologués.";
   }
   if (q.includes("mangue")) {
-    return "Pour la Mangue : la mouche des fruits est active. Utilisez des pieges a pheromones. La recolte a Korhogo commence bientot, prevoyez le stockage a l'ombre.";
+    return "Conseil général : inspectez régulièrement les fruits et retirez les fruits abîmés. Un conseiller local pourra confirmer la cause et les mesures adaptées à votre zone.";
   }
   if (q.includes("tomate")) {
-    return "Pour la Tomate : le Mildiou est votre plus grand ennemi. Evitez l'arrosage par aspersion le soir. Le prix sur le marche de gros est de 450 FCFA le kg aujourd'hui.";
+    return "Conseil général : évitez de mouiller le feuillage le soir et surveillez l'apparition de taches. Cette démo ne fournit ni diagnostic ni prix de marché en temps réel.";
   }
   if (q.includes("meteo") || q.includes("pluie")) {
-    return "Analyse satellite en cours... Le ciel sur votre zone est variable. Risque d'averses isolees d'ici ce soir. Protegez vos sechoirs.";
+    return "Consultez l'écran météo pour les données disponibles. Cette conversation ne fournit pas de prévision locale en temps réel.";
   }
   if (q.includes("qui es-tu") || q.includes("intelligence")) {
-    return "Je suis JEYSI.AI, votre conseiller agricole intelligent. Je peux analyser vos cultures et me connecter aux donnees meteo mondiales pour vous aider.";
+    return "Je suis l'assistant local de démonstration d'AgroSentinel. Je fournis des conseils généraux, sans diagnostic clinique ni données de marché en temps réel.";
   }
-  return "Question intéressante. D'après mes recherches sur le réseau AgroSentinel, je vous suggère de vérifier l'humidité de votre sol et de consulter nos alertes de la Sentinelle Épidémique.";
+  return "Conseil général de démonstration : observez vos cultures, notez les symptômes et sollicitez un technicien agricole avant tout traitement.";
 }
 
 function wait(ms: number) {

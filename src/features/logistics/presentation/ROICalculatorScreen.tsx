@@ -31,7 +31,7 @@ export function ROICalculatorScreen({ onBack }: ROICalculatorScreenProps) {
 
   return (
     <View style={styles.container}>
-      <AppHeader title="📊 Calculateur de Gain IA" color={colors.orange} onBack={onBack} />
+      <AppHeader title="Calculateur de scénario" color={colors.orange} onBack={onBack} />
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.title}>Parametres de la Parcelle</Text>
         <View style={styles.cropGrid}>
@@ -64,18 +64,18 @@ export function ROICalculatorScreen({ onBack }: ROICalculatorScreenProps) {
         />
         <View style={styles.divider} />
         <ResultCard
-          title="RISQUE FINANCIER (SANS IA)"
+          title="ESTIMATION DE PERTE (SCÉNARIO)"
           value={result.loss}
           color={colors.red}
-          subtitle="Perte estimée due aux maladies non détectées."
+          subtitle="Estimation illustrative, à valider avec des données terrain."
         />
         <ResultCard
-          title="VALEUR SAUVÉE PAR AGROSENTINEL"
+          title="VALEUR POTENTIELLEMENT PRÉSERVÉE"
           value={result.gain}
           color={colors.green}
-          subtitle="Revenu additionnel grâce au diagnostic précoce."
+          subtitle="Simulation illustrative ; elle ne constitue pas une prévision financière."
         />
-        <Text style={styles.footer}>Donnees basees sur les rendements moyens de l'ANADER (CI)</Text>
+        <Text style={styles.footer}>Rendements et hypothèses de démonstration, à remplacer par des données vérifiées.</Text>
       </ScrollView>
     </View>
   );
@@ -157,21 +157,30 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 8,
-    marginBottom: 16
+    marginBottom: 18
   },
   cropChip: {
-    minHeight: 40,
-    paddingHorizontal: 15,
-    borderRadius: 20,
+    minHeight: 42,
+    paddingHorizontal: 16,
+    borderRadius: 12,
     borderWidth: 1,
     borderColor: colors.border,
     backgroundColor: colors.surface,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    shadowColor: "#000000",
+    shadowOpacity: 0.02,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 1
   },
   cropChipSelected: {
     borderColor: colors.orange,
-    backgroundColor: colors.orangeLight
+    backgroundColor: colors.orangeLight,
+    shadowColor: colors.orange,
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 2
   },
   cropText: {
     color: colors.muted,
@@ -181,23 +190,29 @@ const styles = StyleSheet.create({
     color: colors.orangeDark
   },
   inputWrap: {
-    marginBottom: 14
+    marginBottom: 16
   },
   inputLabel: {
-    marginBottom: 6,
+    marginBottom: 8,
     color: colors.text,
-    fontWeight: "800"
+    fontWeight: "800",
+    fontSize: 14
   },
   inputRow: {
     minHeight: 54,
-    paddingHorizontal: 12,
-    borderRadius: 8,
+    paddingHorizontal: 14,
+    borderRadius: 14,
     borderWidth: 1,
     borderColor: colors.border,
     backgroundColor: colors.surface,
     flexDirection: "row",
     alignItems: "center",
-    gap: 10
+    gap: 10,
+    shadowColor: "#000000",
+    shadowOpacity: 0.02,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2
   },
   input: {
     flex: 1,
@@ -206,39 +221,47 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 1,
-    marginVertical: 20,
+    marginVertical: 22,
     backgroundColor: colors.border
   },
   resultCard: {
     marginBottom: 18,
-    padding: 20,
-    borderRadius: 8,
-    borderWidth: 2,
-    alignItems: "center"
+    padding: 22,
+    borderRadius: 18,
+    borderWidth: 1.5,
+    alignItems: "center",
+    shadowColor: "#000000",
+    shadowOpacity: 0.03,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 3
   },
   resultTitle: {
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: "900",
+    letterSpacing: 0.5,
     textAlign: "center"
   },
   resultValue: {
     width: "100%",
-    marginTop: 10,
-    fontSize: 32,
+    marginTop: 12,
+    fontSize: 30,
     fontWeight: "900",
     textAlign: "center"
   },
   resultSubtitle: {
-    marginTop: 10,
-    opacity: 0.75,
+    marginTop: 12,
+    opacity: 0.8,
     fontSize: 12,
+    lineHeight: 18,
     textAlign: "center"
   },
   footer: {
-    marginTop: 18,
+    marginTop: 20,
     color: colors.gray,
     fontSize: 11,
     fontStyle: "italic",
-    textAlign: "center"
+    textAlign: "center",
+    lineHeight: 16
   }
 });

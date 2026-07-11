@@ -1,5 +1,5 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Alert, Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { AppHeader } from "../../../components/AppHeader";
 import { colors } from "../../../theme/colors";
@@ -22,19 +22,6 @@ export function LogisticsGroupingScreen({ onBack }: LogisticsGroupingScreenProps
   const [selectedZone, setSelectedZone] = useState<string | null>(null);
   const [tonnage, setTonnage] = useState("");
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setVolumes((current) => {
-        const nextSoubre = current["Zone Soubre"] + 0.2;
-        return {
-          ...current,
-          "Zone Soubre": nextSoubre >= 15 ? 0 : nextSoubre
-        };
-      });
-    }, 8000);
-    return () => clearInterval(timer);
-  }, []);
-
   function openRegister(zone: string) {
     setSelectedZone(zone);
     setTonnage("");
@@ -48,17 +35,17 @@ export function LogisticsGroupingScreen({ onBack }: LogisticsGroupingScreenProps
       [selectedZone]: (current[selectedZone] ?? 0) + value
     }));
     setSelectedZone(null);
-    Alert.alert("Groupage mis a jour", `${value} T enregistrees pour ${selectedZone}.`);
+    Alert.alert("Simulation locale", `${value} T ont été ajoutées uniquement dans cette session.`);
   }
 
   return (
     <View style={styles.container}>
-      <AppHeader title="🚚 Groupage Logistique Live" color={colors.green} onBack={onBack} />
+      <AppHeader title="Groupage logistique — démo locale" color={colors.green} onBack={onBack} />
       <View style={styles.liveBanner}>
         <MaterialIcons name="sensors" size={24} color={colors.orange} />
-        <Text style={styles.liveText}>Mise a jour en direct des collectes regionales</Text>
+        <Text style={styles.liveText}>Volumes de démonstration, non synchronisés</Text>
         <View style={styles.liveBadge}>
-          <Text style={styles.liveBadgeText}>LIVE</Text>
+          <Text style={styles.liveBadgeText}>DÉMO</Text>
         </View>
       </View>
       <ScrollView contentContainerStyle={styles.content}>
@@ -90,7 +77,7 @@ export function LogisticsGroupingScreen({ onBack }: LogisticsGroupingScreenProps
                 <Text style={styles.cancelText}>Annuler</Text>
               </Pressable>
               <Pressable onPress={registerHarvest} style={styles.validateButton}>
-                <Text style={styles.validateText}>VALIDER L'ENVOI</Text>
+              <Text style={styles.validateText}>VALIDER EN LOCAL</Text>
               </Pressable>
             </View>
           </View>
@@ -110,7 +97,7 @@ function ZoneCard({ zone, volume, onAdd }: { zone: string; volume: number; onAdd
       <View style={styles.zoneHeader}>
         <View>
           <Text style={styles.zoneTitle}>{zone}</Text>
-          <Text style={styles.zoneSubtitle}>Collecte en cours...</Text>
+          <Text style={styles.zoneSubtitle}>Valeur de démonstration</Text>
         </View>
         <Text style={[styles.volume, { color: isReady ? colors.green : colors.orange }]}>
           {volume.toFixed(1)} T

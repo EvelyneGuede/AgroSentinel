@@ -3,8 +3,8 @@ export type DiagnosticModel = {
   date: string;
   disease: string;
   confidence: number;
-  latitude: number;
-  longitude: number;
+  latitude: number | null;
+  longitude: number | null;
   recommendation: string;
   riskLevel: string;
   isSynced: boolean;
@@ -15,8 +15,8 @@ export type DiagnosticRow = {
   date: string;
   disease: string;
   confidence: number;
-  latitude: number;
-  longitude: number;
+  latitude: number | null;
+  longitude: number | null;
   recommendation: string;
   risk_level: string;
   is_synced: number;

@@ -170,6 +170,10 @@ export function DiagnosticScreen({ onBack }: DiagnosticScreenProps) {
           ) : null}
         </View>
 
+        <Text style={styles.privacyNotice}>
+          Les photos restent sur l'appareil. La position est facultative, arrondie et conservée localement 30 jours.
+        </Text>
+
         {result ? <ResultCard result={result} /> : null}
 
         <View style={styles.actionRow}>
@@ -193,30 +197,35 @@ export function DiagnosticScreen({ onBack }: DiagnosticScreenProps) {
 }
 
 function ResultCard({ result }: { result: ClassificationResult }) {
-  const riskColor = result.risk_level === "Eleve" ? colors.red : result.risk_level === "Moyen" ? colors.orange : colors.green;
-  const riskEmoji = result.risk_level === "Eleve" ? "🔴" : result.risk_level === "Moyen" ? "🟡" : "🟢";
+  const isHigh = result.risk_level === "Eleve";
+  const isMedium = result.risk_level === "Moyen";
+  
+  const riskColor = isHigh ? colors.red : isMedium ? colors.orange : colors.green;
+  const riskBg = isHigh ? colors.redLight : isMedium ? colors.orangeLight : colors.greenLight;
+  const riskBorderColor = isHigh ? colors.redBorder : isMedium ? colors.orangeBorder : colors.greenBorder;
+  const riskEmoji = isHigh ? "🔴" : isMedium ? "🟡" : "🟢";
   const confidenceVal = result.confidence * 100;
   const confidencePercent = confidenceVal.toFixed(1);
   
   return (
-    <View style={styles.resultCard}>
+    <View style={[styles.resultCard, { backgroundColor: riskBg, borderColor: riskBorderColor, borderWidth: 1.5 }]}>
       <View style={styles.resultTitleRow}>
-        <MaterialIcons name="verified" size={24} color={riskColor} />
-        <Text style={styles.resultTitle}>{result.label}</Text>
+        <MaterialIcons name="verified" size={26} color={riskColor} />
+        <Text style={[styles.resultTitle, { color: colors.text, fontSize: 19 }]}>{result.label}</Text>
       </View>
-      <View style={styles.divider} />
-      <View style={[styles.riskBox, { borderLeftColor: riskColor }]}>
-        <Text style={styles.riskLabel}>⚠️ NIVEAU DE RISQUE</Text>
+      <View style={[styles.divider, { backgroundColor: riskBorderColor }]} />
+      <View style={[styles.riskBox, { borderLeftColor: riskColor, backgroundColor: colors.white, borderColor: colors.border, borderWidth: 1 }]}>
+        <Text style={[styles.riskLabel, { color: colors.muted }]}>⚠️ NIVEAU DE RISQUE</Text>
         <View style={styles.riskContent}>
           <Text style={[styles.riskValue, { color: riskColor }]}>{riskEmoji} {result.risk_level.toUpperCase()}</Text>
-          <View style={styles.confidenceBar}>
+          <View style={[styles.confidenceBar, { backgroundColor: colors.borderLight }]}>
             <View style={[styles.confidenceBarFill, { width: `${Math.min(confidenceVal, 100)}%`, backgroundColor: riskColor }]} />
           </View>
-          <Text style={styles.confidenceText}>Confiance: {confidencePercent}%</Text>
+          <Text style={styles.confidenceText}>Confiance : {confidencePercent}%</Text>
         </View>
       </View>
-      <Text style={styles.recommendationLabel}>💡 RECOMMANDATION :</Text>
-      <Text style={styles.recommendation}>{result.recommendation}</Text>
+      <Text style={[styles.recommendationLabel, { color: riskColor === colors.green ? colors.greenDark : riskColor }]}>💡 RECOMMANDATION :</Text>
+      <Text style={[styles.recommendation, { color: colors.text, fontSize: 13.5, lineHeight: 21 }]}>{result.recommendation}</Text>
     </View>
   );
 }
@@ -261,7 +270,9 @@ function HistorySheet({
                     <Text style={styles.historyDisease}>{item.disease}</Text>
                     <Text style={styles.historyMeta}>
                       {item.date}
-                      {"\n"}Loc: {item.latitude.toFixed(2)}, {item.longitude.toFixed(2)}
+                      {"\n"}{item.latitude === null || item.longitude === null
+                        ? "Position non enregistrée"
+                        : `Position approximative : ${item.latitude.toFixed(3)}, ${item.longitude.toFixed(3)}`}
                     </Text>
                   </View>
                   <Text style={styles.historyScore}>{Math.round(item.confidence * 100)}%</Text>
@@ -275,25 +286,22 @@ function HistorySheet({
   );
 }
 
-async function getPositionOrFallback() {
+async function getPositionOrFallback(): Promise<{ latitude: number | null; longitude: number | null }> {
   try {
     const permission = await Location.requestForegroundPermissionsAsync();
     if (permission.status !== "granted") throw new Error("GPS bloque");
     const position = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.High });
     return {
-      latitude: position.coords.latitude,
-      longitude: position.coords.longitude
+      latitude: Number(position.coords.latitude.toFixed(3)),
+      longitude: Number(position.coords.longitude.toFixed(3))
     };
   } catch {
-    return { latitude: 6.8276, longitude: -5.2767 };
+    return { latitude: null, longitude: null };
   }
 }
 
 function formatDate(date: Date) {
-  const pad = (value: number) => value.toString().padStart(2, "0");
-  return `${pad(date.getDate())}/${pad(date.getMonth() + 1)}/${date.getFullYear()} ${pad(
-    date.getHours()
-  )}:${pad(date.getMinutes())}`;
+  return date.toISOString();
 }
 
 const styles = StyleSheet.create({
@@ -372,6 +380,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: colors.muted,
     fontWeight: "600"
+  },
+  privacyNotice: {
+    marginTop: 10,
+    color: colors.muted,
+    fontSize: 12,
+    lineHeight: 17,
+    textAlign: "center"
   },
   permissionButton: {
     marginTop: 16,
@@ -603,4 +618,3 @@ const styles = StyleSheet.create({
     fontWeight: "600"
   }
 });
-

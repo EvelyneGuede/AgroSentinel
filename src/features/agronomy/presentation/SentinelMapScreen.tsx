@@ -2,7 +2,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import * as Location from "expo-location";
 import React, { useEffect, useRef, useState } from "react";
 import { Alert, Animated, Pressable, StyleSheet, Text, View } from "react-native";
-import MapView, { Marker, Region, UrlTile } from "react-native-maps";
+import MapView, { Marker, Region } from "react-native-maps";
 import { AppHeader } from "../../../components/AppHeader";
 import { DiagnosticModel } from "../../../core/models/DiagnosticModel";
 import { getAllDiagnostics } from "../../../core/services/databaseService";
@@ -11,6 +11,10 @@ import { colors } from "../../../theme/colors";
 type SentinelMapScreenProps = {
   onBack: () => void;
 };
+
+function hasCoordinates(diagnostic: DiagnosticModel): diagnostic is DiagnosticModel & { latitude: number; longitude: number } {
+  return diagnostic.latitude !== null && diagnostic.longitude !== null;
+}
 
 const defaultRegion: Region = {
   latitude: 6.8276,
@@ -54,11 +58,10 @@ export function SentinelMapScreen({ onBack }: SentinelMapScreenProps) {
 
   return (
     <View style={styles.container}>
-      <AppHeader title="🗺️ Sentinelle Epidemique Live" color={colors.red} onBack={onBack} />
+      <AppHeader title="Sentinelle épidémique — données locales" color={colors.red} onBack={onBack} />
       <View style={styles.mapWrap}>
-        <MapView style={styles.map} region={region} onRegionChangeComplete={setRegion}>
-          <UrlTile maximumZ={19} urlTemplate="https://api.mapbox.com/styles/v1/mapbox/light-v11/tiles/256/{z}/{x}/{y}?access_token=REDACTED_MAPBOX_TOKEN" />
-          {diagnostics.map((diag, index) => (
+        <MapView mapType="none" style={styles.map} region={region} onRegionChangeComplete={setRegion}>
+          {diagnostics.filter(hasCoordinates).map((diag, index) => (
             <Marker
               key={`${diag.id ?? index}-${diag.date}`}
               coordinate={{ latitude: diag.latitude, longitude: diag.longitude }}
@@ -66,15 +69,9 @@ export function SentinelMapScreen({ onBack }: SentinelMapScreenProps) {
               <PulseMarker riskLevel={diag.riskLevel} label={diag.disease} />
             </Marker>
           ))}
-          <Marker coordinate={{ latitude: 7.5399, longitude: -5.5471 }}>
-            <PulseMarker riskLevel="Eleve" label="Cacao : Pourriture Brune" />
-          </Marker>
-          <Marker coordinate={{ latitude: 9.458, longitude: -5.6295 }}>
-            <PulseMarker riskLevel="Moyen" label="Mangue : Anthracnose" />
-          </Marker>
         </MapView>
         <View style={styles.legend}>
-          <Text style={styles.legendTitle}>📊 Légende d'Alertes</Text>
+          <Text style={styles.legendTitle}>Légende des diagnostics locaux</Text>
           <View style={styles.legendRow}>
             <View style={[styles.legendDot, { backgroundColor: "#FF5252" }]} />
             <Text style={styles.legendText}>🔴 Critique</Text>
@@ -89,7 +86,7 @@ export function SentinelMapScreen({ onBack }: SentinelMapScreenProps) {
           </View>
           <View style={styles.legendRow}>
             <MaterialIcons name="radar" color={colors.blue} size={16} />
-            <Text style={styles.legendCount}>En direct: {diagnostics.length + 2}</Text>
+            <Text style={styles.legendCount}>Données locales : {diagnostics.length}</Text>
           </View>
         </View>
         {isLoading ? (

@@ -2,74 +2,38 @@
 
 ## Présentation du projet
 
----
+### Le problème
 
-## 1. Problème à résoudre
+Les producteurs ont besoin d'outils simples pour observer leurs cultures, mieux anticiper les risques et organiser leur activité.
 
-- Les producteurs agricoles manquent d’outils simples et fiables pour :
-  - diagnostiquer rapidement leurs cultures,
-  - anticiper les risques,
-  - suivre la logistique et la valorisation de leur production.
+### Notre MVP
 
----
+AgroSentinel est une application mobile offline-first qui réunit :
 
-## 2. Solution proposée
+- la capture d'images de cultures ;
+- l'accès optionnel à une position approximative ;
+- des données météo agricoles ;
+- une cartographie locale de diagnostics ;
+- des outils de logistique et de simulation commerciale.
 
-AgroSentinel est une application mobile intelligente qui combine :
-- l’intelligence artificielle,
-- la météo,
-- la cartographie des risques,
-- et des outils de gestion logistique et commerciale.
+### Ce qui fonctionne aujourd'hui
 
----
+- Les diagnostics et leur historique sont enregistrés localement pendant 30 jours.
+- La météo est consultée auprès d'Open-Meteo, avec un mode secours explicite hors ligne.
+- La position n'est demandée qu'au moment utile et n'est jamais remplacée par une fausse position.
+- Les données ne sont pas synchronisées vers un serveur tant qu'une API authentifiée et auditée n'est pas disponible.
 
-## 3. Fonctionnalités principales
+### Transparence sur le prototype
 
-### 🌾 Agronomie connectée
-- Diagnostic IA des cultures
-- Conseiller vocal
-- Prédictions météo agricoles
-- Cartographie des risques
+Le moteur TFLite, la synchronisation nationale et le paiement Mobile Money ne sont pas encore intégrés. L'interface les présente comme des étapes de démonstration, jamais comme des services opérationnels.
 
-### 📦 Logistique & marché
-- Calculateur de ROI
-- Groupage et logistique
-- Marché B2B
-- Suivi de la valorisation
+### Feuille de route de mise en production
 
----
+1. Intégrer et valider l'inférence TFLite native avec un jeu de tests métier.
+2. Créer une API sécurisée : comptes, autorisations, validation serveur, journal d'audit et protection anti-rejeu.
+3. Ajouter le consentement, le chiffrement local et le contrôle de suppression/export des données.
+4. Brancher un prestataire de paiement Mobile Money certifié, côté serveur.
 
-## 4. Valeur ajoutée
+### Valeur ajoutée
 
-- Gain de temps pour les producteurs
-- Décisions plus rapides et plus fiables
-- Meilleure visibilité sur les risques et les opportunités
-- Outil de transformation digitale du secteur agricole
-
----
-
-## 5. Technologie utilisée
-
-- React Native
-- TypeScript
-- Expo
-- Intelligence artificielle embarquée
-- Services météo et cartographiques
-
----
-
-## 6. Objectif du projet
-
-Créer une application accessible, moderne et utile pour accompagner les producteurs dans leurs décisions quotidiennes.
-
----
-
-## 7. Conclusion
-
-AgroSentinel vise à mettre la technologie au service de l’agriculture locale pour améliorer la productivité, la résilience et la rentabilité.
-
----
-
-## Merci
-
-Pour toute question ou suggestion, nous pouvons poursuivre l’évolution du projet avec de nouvelles fonctionnalités.
+Le MVP démontre une base mobile respectueuse des données, prête à être connectée à des services agricoles validés.

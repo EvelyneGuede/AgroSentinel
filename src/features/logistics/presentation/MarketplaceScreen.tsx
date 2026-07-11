@@ -26,7 +26,7 @@ const initialItems: MarketItem[] = [
     price: "450",
     icon: "eco",
     isSold: false,
-    tag: "CERTIFIE"
+    tag: "DÉMO"
   },
   {
     product: "Cacao Grade A",
@@ -35,7 +35,7 @@ const initialItems: MarketItem[] = [
     price: "1500",
     icon: "agriculture",
     isSold: false,
-    tag: "TOP PRIX"
+    tag: "DÉMO"
   }
 ];
 
@@ -53,7 +53,7 @@ export function MarketplaceScreen({ onBack }: MarketplaceScreenProps) {
           price: "275",
           icon: "grain",
           isSold: false,
-          tag: "NOUVEAU"
+          tag: "DÉMO"
         },
         ...current
       ]);
@@ -67,7 +67,7 @@ export function MarketplaceScreen({ onBack }: MarketplaceScreenProps) {
       current.map((item, index) => (index === purchaseIndex ? { ...item, isSold: true } : item))
     );
     setPurchaseIndex(null);
-    Alert.alert("Transaction securisee", "Fonds bloques. Escrow Mobile Money active.");
+    Alert.alert("Démo locale", "Aucun paiement ni blocage de fonds n'a été effectué.");
   }
 
   const selectedItem = purchaseIndex === null ? null : items[purchaseIndex];
@@ -84,10 +84,10 @@ export function MarketplaceScreen({ onBack }: MarketplaceScreenProps) {
         <View style={styles.sheetBackdrop}>
           <View style={styles.sheet}>
             <MaterialIcons name="security" size={50} color={colors.greenMedium} />
-            <Text style={styles.sheetTitle}>Paiement Sequestre Mobile Money</Text>
-            <Text style={styles.sheetText}>Bloquer les fonds pour : {selectedItem?.product} ?</Text>
+            <Text style={styles.sheetTitle}>Intention d'achat — démo locale</Text>
+            <Text style={styles.sheetText}>Simuler une intention d'achat pour : {selectedItem?.product} ?</Text>
             <Pressable onPress={confirmPurchase} style={styles.confirmButton}>
-              <Text style={styles.confirmText}>CONFIRMER LE BLOCAGE</Text>
+              <Text style={styles.confirmText}>CONFIRMER LA SIMULATION</Text>
             </Pressable>
             <Pressable onPress={() => setPurchaseIndex(null)} style={styles.cancelSheetButton}>
               <Text style={styles.cancelSheetText}>Annuler</Text>
