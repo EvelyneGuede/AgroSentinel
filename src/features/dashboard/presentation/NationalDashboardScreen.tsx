@@ -1,20 +1,13 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, Alert, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import MapView, { Region } from "react-native-maps";
+import { OfflineMapPanel } from "../../../components/OfflineMapPanel";
 import {
   getSyncCount,
   subscribeToSync,
   synchronizeData
 } from "../../../core/services/syncService";
 import { colors } from "../../../theme/colors";
-
-const nationalRegion: Region = {
-  latitude: 7.5399,
-  longitude: -5.5471,
-  latitudeDelta: 5.5,
-  longitudeDelta: 5.5
-};
 
 export function NationalDashboardScreen() {
   const [syncCount, setSyncCount] = useState(getSyncCount());
@@ -44,8 +37,10 @@ export function NationalDashboardScreen() {
       <Text style={styles.sectionTitle}>Cartographie locale — aucune donnée nationale</Text>
       
       <View style={styles.mapBox}>
-        <MapView mapType="none" style={styles.map} initialRegion={nationalRegion}>
-        </MapView>
+        <OfflineMapPanel
+          title="Indicateurs locaux — hors connexion"
+          emptyLabel="Aucune donnée nationale n'est synchronisée."
+        />
       </View>
       
       <Text style={styles.sectionTitle}>Flux d'approvisionnement — simulation locale</Text>
@@ -236,9 +231,6 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 4 },
     elevation: 2
-  },
-  map: {
-    flex: 1
   },
   supplyCard: {
     marginHorizontal: 16,

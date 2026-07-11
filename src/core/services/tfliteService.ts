@@ -1,7 +1,9 @@
 import { loadTensorflowModel, TensorflowModel } from "react-native-fast-tflite";
 import { Asset } from "expo-asset";
 import * as ImageManipulator from "expo-image-manipulator";
-import * as FileSystem from "expo-file-system";
+// `readAsStringAsync` fait partie de l'API legacy, explicitement séparée
+// depuis Expo SDK 54.
+import * as FileSystem from "expo-file-system/legacy";
 import jpeg from "jpeg-js";
 
 export type CultureType = "cacao" | "mangue" | "tomate";
