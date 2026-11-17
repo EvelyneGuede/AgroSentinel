@@ -9,3 +9,4 @@ yarn-error.log*
 
 # Copie de travail des modèles : les modèles réellement embarqués sont dans assets/IA */
 IA/
+/android

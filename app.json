@@ -1,68 +1,69 @@
-{
-  "expo": {
-    "name": "AgroSentinel",
-    "slug": "agrosentinel",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/logo.png",
-    "userInterfaceStyle": "light",
-    "assetBundlePatterns": [
-      "assets/**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "ci.agrosentinel.inza",
-      "infoPlist": {
-        "NSCameraUsageDescription": "AgroSentinel utilise la camera pour analyser les feuilles.",
-        "NSPhotoLibraryUsageDescription": "AgroSentinel utilise la galerie pour analyser des photos de cultures.",
-        "NSLocationWhenInUseUsageDescription": "AgroSentinel utilise votre position approximative, uniquement si vous l'autorisez, pour enregistrer un diagnostic local."
-      }
-    },
-    "android": {
-      "package": "ci.agrosentinel.inza",
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/logo.png",
-        "backgroundColor": "#38B000"
-      },
-      "permissions": [
-        "android.permission.CAMERA",
-        "android.permission.ACCESS_FINE_LOCATION",
-        "android.permission.ACCESS_COARSE_LOCATION",
-        "android.permission.RECORD_AUDIO"
-      ]
-    },
-    "web": {
-      "favicon": "./assets/logo.png"
-    },
-    "plugins": [
-      [
-        "expo-camera",
-        {
-          "cameraPermission": "AgroSentinel utilise la camera pour analyser les feuilles.",
-          "recordAudioAndroid": false
-        }
-      ],
-      [
-        "expo-image-picker",
-        {
-          "photosPermission": "AgroSentinel utilise la galerie pour analyser des photos de cultures."
-        }
-      ],
-      [
-        "expo-location",
-        {
-          "locationWhenInUsePermission": "AgroSentinel utilise votre position pour cartographier les alertes agricoles."
-        }
-      ],
-      "expo-sqlite",
-      "expo-font",
-      "react-native-fast-tflite",
-      "expo-asset"
-    ],
-    "extra": {
-      "eas": {
-        "projectId": "9ac98bf8-b937-45e0-ba3a-aaaabe2b5cbb"
-      }
-    }
-  }
+﻿{
+    "expo":  {
+                 "name":  "AgroSentinel",
+                 "slug":  "agrosentinel",
+                 "owner":  "ange_evelyne",
+                 "version":  "1.0.0",
+                 "orientation":  "portrait",
+                 "icon":  "./assets/logo.png",
+                 "userInterfaceStyle":  "light",
+                 "assetBundlePatterns":  [
+                                             "assets/**/*"
+                                         ],
+                 "ios":  {
+                             "supportsTablet":  true,
+                             "bundleIdentifier":  "ci.agrosentinel.inza",
+                             "infoPlist":  {
+                                               "NSCameraUsageDescription":  "AgroSentinel utilise la camera pour analyser les feuilles.",
+                                               "NSPhotoLibraryUsageDescription":  "AgroSentinel utilise la galerie pour analyser des photos de cultures.",
+                                               "NSLocationWhenInUseUsageDescription":  "AgroSentinel utilise votre position approximative, uniquement si vous l\u0027autorisez, pour enregistrer un diagnostic local."
+                                           }
+                         },
+                 "android":  {
+                                 "package":  "ci.agrosentinel.inza",
+                                 "adaptiveIcon":  {
+                                                      "foregroundImage":  "./assets/logo.png",
+                                                      "backgroundColor":  "#38B000"
+                                                  },
+                                 "permissions":  [
+                                                     "android.permission.CAMERA",
+                                                     "android.permission.ACCESS_FINE_LOCATION",
+                                                     "android.permission.ACCESS_COARSE_LOCATION"
+                                                 ]
+                             },
+                 "web":  {
+                             "favicon":  "./assets/logo.png"
+                         },
+                 "plugins":  [
+                                 [
+                                     "expo-camera",
+                                     {
+                                         "cameraPermission":  "AgroSentinel utilise la camera pour analyser les feuilles.",
+                                         "recordAudioAndroid":  false
+                                     }
+                                 ],
+                                 [
+                                     "expo-image-picker",
+                                     {
+                                         "photosPermission":  "AgroSentinel utilise la galerie pour analyser des photos de cultures."
+                                     }
+                                 ],
+                                 [
+                                     "expo-location",
+                                     {
+                                         "locationWhenInUsePermission":  "AgroSentinel utilise votre position pour cartographier les alertes agricoles."
+                                     }
+                                 ],
+                                 "expo-sqlite",
+                                 "expo-font",
+                                 "react-native-fast-tflite",
+                                 "expo-asset"
+                             ],
+                 "extra":  {
+                               "eas":  {
+                                           "projectId":  "2a86ecb2-fb11-4fba-9fc3-390a708f9a19"
+                                       }
+                           },
+                 "scheme":  "agrosentinel"
+             }
 }
