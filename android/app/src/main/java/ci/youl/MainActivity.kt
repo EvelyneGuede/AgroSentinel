@@ -1,4 +1,4 @@
-package ci.agrosentinel.inza
+package ci.agrosentinel.youl
 
 import android.os.Build
 import android.os.Bundle

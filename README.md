@@ -196,8 +196,8 @@ npm run typecheck
 
 ## 📋 Identifiants de l'Application
 
-- **Android Package** : `ci.agrosentinel.inza`
-- **iOS Bundle ID** : `ci.agrosentinel.inza`
+- **Android Package** : `ci.agrosentinel.youl`
+- **iOS Bundle ID** : `ci.agrosentinel.youl`
 - **Expo Slug** : `agrosentinel`
 
 ---

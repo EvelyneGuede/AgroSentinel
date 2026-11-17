@@ -1,4 +1,4 @@
-﻿{
+{
     "expo":  {
                  "name":  "AgroSentinel",
                  "slug":  "agrosentinel",
@@ -12,7 +12,7 @@
                                          ],
                  "ios":  {
                              "supportsTablet":  true,
-                             "bundleIdentifier":  "ci.agrosentinel.inza",
+                             "bundleIdentifier":  "ci.agrosentinel.youl",
                              "infoPlist":  {
                                                "NSCameraUsageDescription":  "AgroSentinel utilise la camera pour analyser les feuilles.",
                                                "NSPhotoLibraryUsageDescription":  "AgroSentinel utilise la galerie pour analyser des photos de cultures.",
@@ -20,7 +20,7 @@
                                            }
                          },
                  "android":  {
-                                 "package":  "ci.agrosentinel.inza",
+                                 "package":  "ci.agrosentinel.youl",
                                  "adaptiveIcon":  {
                                                       "foregroundImage":  "./assets/logo.png",
                                                       "backgroundColor":  "#38B000"
